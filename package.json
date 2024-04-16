@@ -1,0 +1,51 @@
+{
+  "name": "pure-backend",
+  "version": "lastest",
+  "description": "PureChat API",
+  "main": "app.js",
+  "bin": "./index.js",
+  "scripts": {
+    "dev": "node src/app.js",
+    "start": "nodemon --config nodemon.json src/app.js",
+    "pkgwin": "pkg . -t node16-win-x64 -o app",
+    "pkgmac": "pkg . -t node14-macos-x64 -o app"
+  },
+  "dependencies": {
+    "@vercel/node": "^2.8.4",
+    "axios": "^1.1.3",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "cos-nodejs-sdk-v5": "^2.12.4",
+    "dayjs": "^1.11.9",
+    "dotenv": "^16.0.3",
+    "eslint": "8.7.0",
+    "express-fileupload": "^1.4.0",
+    "express-jwt": "^6.0.0",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "lowdb": "^1.0.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20",
+    "pkg": "^5.8.0",
+    "prettier": "^2.8.1",
+    "tls-sig-api-v2": "^1.0.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "express": "^4.17.1"
+  },
+  "pkg": {
+    "scripts": "module/*.js",
+    "targets": [
+      "node14-win-x64",
+      "node14-macos-x64"
+    ],
+    "assets": [
+      "node_modules/axios",
+      "/public",
+      "./db"
+    ],
+    "outputPath": "dist"
+  }
+}
