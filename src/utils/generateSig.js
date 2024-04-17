@@ -3,8 +3,8 @@ const { imAppId, imAppKey } = require("../config");
 
 module.exports = ({ identifier = "" }) => {
   const appId = imAppId;
-  const EXPIRETIME = 86400 * 7;
   const appKey = imAppKey;
+  const EXPIRETIME = 86400 * 7;
   const api = new TLSSigAPIv2.Api(appId, appKey);
   console.log("计算userSig:", identifier);
   return api.genSig(identifier, EXPIRETIME);

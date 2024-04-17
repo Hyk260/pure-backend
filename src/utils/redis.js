@@ -45,7 +45,7 @@ async function deleteKey(key) {
 //   {
 //     username: "linjx",
 //     password: "1234567",
-//     phone: "13812345678",
+//     phone: "",
 //   },
 // ];
 
@@ -67,7 +67,7 @@ async function storeUsers(users) {
     console.error("存储用户信息时出错:", error);
   }
 }
-async function getUsername(username) {
+async function getUserInfo(username) {
   try {
     const userData = await redis.hgetall(`user:${username}`);
     return userData;
@@ -83,7 +83,7 @@ function quit() {
 
 module.exports = {
   storeUsers,
-  getUsername,
+  getUserInfo,
   setKey,
   getKey,
   deleteKey,
