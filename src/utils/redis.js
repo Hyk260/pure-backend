@@ -40,8 +40,52 @@ async function deleteKey(key) {
   }
 }
 
+// 用户信息
+// const users = [
+//   {
+//     username: "linjx",
+//     password: "1234567",
+//     phone: "13812345678",
+//   },
+// ];
+
+// 存储用户信息
+async function storeUsers(users) {
+  try {
+    for (const user of users) {
+      await redis.hset(
+        `user:${user.username}`,
+        "username",
+        user.username,
+        "password",
+        user.password,
+        "phone",
+        user.phone
+      );
+    }
+  } catch (error) {
+    console.error("存储用户信息时出错:", error);
+  }
+}
+async function getUsername(username) {
+  try {
+    const userData = await redis.hgetall(`user:${username}`);
+    return userData;
+  } catch (error) {
+    console.error("查询用户信息时出错:", error);
+    return null;
+  }
+}
+
+function quit() {
+  redis.quit();
+}
+
 module.exports = {
+  storeUsers,
+  getUsername,
   setKey,
   getKey,
   deleteKey,
+  quit,
 };

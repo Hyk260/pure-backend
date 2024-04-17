@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 // https://www.npmjs.com/package/dotenv
-const envFound = dotenv.config({ path: [".env.local", ".env"] });
+const envFound = dotenv.config({ path: [".env"] });
 
 if (envFound.error) {
   throw new Error("⚠️ Couldn't find .env file ⚠️");

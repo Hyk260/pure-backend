@@ -1,12 +1,6 @@
 const jwt = require("jsonwebtoken");
-const lowdb = require("lowdb");
-const path = require("path");
-const FileSync = require("lowdb/adapters/FileSync");
-const dbUser = path.resolve(__dirname, "../../db/user.json");
-const user = new FileSync(dbUser);
-const db_user = lowdb(user);
-
 const generateSig = require("@/utils/generateSig");
+const { getUsername } = require("@/utils/redis");
 const { jwtSecret, expireTime } = require("@/config");
 
 // 生成 jwt token 的函数
@@ -14,8 +8,13 @@ function generateToken(user) {
   return jwt.sign(user, jwtSecret, { expiresIn: expireTime });
 }
 // 用户认证函数
-function authenticateUser(username, password) {
-  return db_user.get("user").find({ username, password }).value();
+async function authenticateUser(username, password) {
+  const userData = await getUsername(username);
+  if (userData && userData?.password === password) {
+    return userData;
+  } else {
+    return false;
+  }
 }
 const login = async (req, res) => {
   try {
@@ -24,7 +23,7 @@ const login = async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({ code: 400, msg: "请求不合法" });
     }
-    const user = authenticateUser(username, password);
+    const user = await authenticateUser(username, password);
     if (user) {
       const token = generateToken(user);
       res.setHeader("Access-Control-Expose-Headers", "x-token");
