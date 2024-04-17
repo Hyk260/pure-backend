@@ -23,6 +23,7 @@
     "express-fileupload": "^1.4.0",
     "express-jwt": "^6.0.0",
     "express-session": "^1.17.3",
+    "ioredis": "^5.4.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "lowdb": "^1.0.0",

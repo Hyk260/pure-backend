@@ -26,7 +26,7 @@ async function consturctServer(moduleDefs) {
   /* 设置静态文件目录 */
   app.use(express.static(path.join(process.cwd(), "public")));
   /* 自定义中间件JWT校验 */
-  app.use(userAuthorize);
+  // app.use(userAuthorize);
   /* 解析和验证JWT */
   app.use(jwtParser);
   /* 路由 */
@@ -35,8 +35,9 @@ async function consturctServer(moduleDefs) {
   app.use((err, req, res, next) => {
     if (err.name === "UnauthorizedError") {
       res.status(401).send({ msg: "未授权!!!", code: 401 });
+    } else {
+      res.status(500).send("Internal Server Error");
     }
-    res.status(500).send("Internal Server Error");
     next();
   });
   return app;

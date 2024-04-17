@@ -34,10 +34,17 @@ module.exports = {
   logs: {
     level: process.env.LOG_LEVEL || "silly",
   },
+  redis: {
+    port: 20666,
+    host: process.env.REDIS_HOST || "localhost",
+    charset: "utf8_general_ci",
+    user: process.env.REDIS_USER,
+    password: process.env.REDIS_PASS || "123456",
+  },
   mongodb: {},
   api: {
     prefix: "/api",
   },
   // jwt免token白名单接口
-  authOrity: ["/login", "/register", "/rest-api"],
+  authOrity: ["/login", "/register", "/rest-api", "/test"],
 };
