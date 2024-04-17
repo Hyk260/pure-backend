@@ -1,8 +1,8 @@
-const { secretId, secretKey, bucket, region } = require("@/config");
 const COS = require("cos-nodejs-sdk-v5");
+const { secretId, secretKey, bucket, region } = require("@/config");
 const cos = new COS({ SecretId: secretId, SecretKey: secretKey });
 
-// 存储桶名称 由bucketname-appid 组成 appid必须填入 可以在COS控制台查看存储桶名称
+// https://cloud.tencent.com/document/product/436/8629
 function uploadFile(file, fileName) {
   return new Promise((resolve, reject) => {
     cos.putObject(

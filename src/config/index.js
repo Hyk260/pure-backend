@@ -16,12 +16,13 @@ module.exports = {
   // jwt过期时间
   expireTime: 86400 * 7,
   // jwtAlgorithm: process.env.JWT_ALGO,
+  administrator: process.env.ADMIN_ISTRATOR, // app管理员id
   imAppId: process.env.IM_SDK_APPID,
   imAppKey: process.env.IM_SDK_KEY,
   imServerBaseUrl: process.env.IM_SERVER_BASE_URL,
   // cos
-  bucket: "",
-  region: "",
+  bucket: "ljx-1307934606", // 存储桶的名称
+  region: "ap-beijing", // 存储桶所在地域
   secretId: process.env.SecretId,
   secretKey: process.env.SecretKey,
   // chatgpt
