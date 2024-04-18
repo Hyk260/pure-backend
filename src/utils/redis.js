@@ -40,27 +40,21 @@ async function deleteKey(key) {
   }
 }
 
-// 用户信息
-// const users = [
-//   {
-//     username: "linjx",
-//     password: "1234567",
-//     phone: "",
-//   },
-// ];
-
-// 存储用户信息
+/**
+ * 将用户信息存储到 Redis 数据库中
+ * @param {Array<Object>} users - 包含用户信息的数组
+ * @param {string} users[].username - 用户名
+ * @param {string} users[].password - 密码
+ */
 async function storeUsers(users) {
   try {
-    for (const user of users) {
+    for (const { username, password } of users) {
       await redis.hset(
-        `user:${user.username}`,
+        `user_accounts:${username}`,
         "username",
-        user.username,
+        username,
         "password",
-        user.password,
-        "phone",
-        user.phone
+        password
       );
     }
   } catch (error) {
@@ -69,7 +63,7 @@ async function storeUsers(users) {
 }
 async function getUserInfo(username) {
   try {
-    const userData = await redis.hgetall(`user:${username}`);
+    const userData = await redis.hgetall(`user_accounts:${username}`);
     return userData;
   } catch (error) {
     console.error("查询用户信息时出错:", error);

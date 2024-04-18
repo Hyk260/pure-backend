@@ -35,10 +35,9 @@ const login = async (req, res) => {
     }
     const user = await verifyUser(username, password);
     if (user) {
-      const token = getToken(user);
       res.setHeader("Access-Control-Expose-Headers", "x-token");
       // 注意默认情况 Token 必须以 Bearer+空格 开头
-      res.setHeader("X-token", `Bearer ${token}`);
+      res.setHeader("X-token", `Bearer ${getToken(user)}`);
       user.userSig = generateSig({ identifier: username });
       res.json({ code: 200, msg: "登录成功", result: user });
     } else {

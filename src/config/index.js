@@ -4,7 +4,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 // https://www.npmjs.com/package/dotenv
 const envFound = dotenv.config({
   path: [
-    // ".env.local",
+    ".env.local",
     ".env",
   ],
 });
@@ -40,11 +40,11 @@ module.exports = {
     level: process.env.LOG_LEVEL || "silly",
   },
   redis: {
-    port: 20666,
+    port: process.env.REDIS_PORT,
     host: process.env.REDIS_HOST || "localhost",
     charset: "utf8_general_ci",
     user: process.env.REDIS_USER,
-    password: process.env.REDIS_PASS || "123456",
+    password: process.env.REDIS_PASS || "",
   },
   mongodb: {},
   api: {
