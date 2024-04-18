@@ -6,7 +6,7 @@ const envPaths = [".env"];
 if (fs.existsSync(".env.local")) {
   envPaths.unshift(".env.local");
 }
-
+console.log(envPaths);
 // https://www.npmjs.com/package/dotenv
 const envFound = dotenv.config({
   path: envPaths,
