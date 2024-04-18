@@ -1,40 +1,38 @@
 const { service } = require("@/http/rest-api");
 const { randomInt32, buildURL } = require("./utils");
-// 查询帐号
+// 查询帐号[{UserID: userid}]
 const accountCheck = async (params) => {
-  const { userid } = params;
   try {
     const result = await service({
       url: buildURL("v4/im_open_login_svc/account_check"),
       method: "post",
       data: {
-        CheckItem: [
-          {
-            UserID: userid,
-          },
-        ],
+        CheckItem: params,
       },
     });
     const { ErrorCode, ErrorInfo, ResultItem } = result;
     if (ErrorCode !== 0) return ErrorInfo;
-    return ResultItem[0].AccountStatus == "Imported";
+    const flag = ResultItem[0].AccountStatus == "Imported";
+    console.log("accountCheck:", flag);
+    return flag;
   } catch (error) {
     return false;
   }
 };
 // 导入单个账号
 const accountImport = async (params) => {
-  const { userid, nick, faceUrl } = params;
   try {
     const result = await service({
       url: buildURL("v4/im_open_login_svc/account_import"),
       method: "post",
       data: {
-        UserID: userid,
-        Nick: nick,
-        FaceUrl: faceUrl,
+        ...params,
+        // UserID,
+        // Nick,
+        // FaceUrl,
       },
     });
+    console.log("accountImport:", result);
     const { ErrorCode } = result;
     if (ErrorCode !== 0) return ErrorInfo;
     return result;
@@ -262,4 +260,4 @@ const restApi = async (req, res) => {
   }
 };
 
-module.exports = { restApi };
+module.exports = { restApi, ...fun };

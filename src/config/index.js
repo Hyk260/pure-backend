@@ -1,12 +1,15 @@
+const fs = require("fs");
 const dotenv = require("dotenv");
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
+const envPaths = [".env"];
+if (fs.existsSync(".env.local")) {
+  envPaths.unshift(".env.local");
+}
+
 // https://www.npmjs.com/package/dotenv
 const envFound = dotenv.config({
-  path: [
-    ".env.local",
-    ".env",
-  ],
+  path: envPaths,
 });
 
 if (envFound.error) {
@@ -46,7 +49,6 @@ module.exports = {
     user: process.env.REDIS_USER,
     password: process.env.REDIS_PASS || "",
   },
-  mongodb: {},
   api: {
     prefix: "/api",
   },
