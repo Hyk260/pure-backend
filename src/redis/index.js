@@ -1,14 +1,4 @@
-const Redis = require("ioredis");
-const options = require("@/config");
-
-const redis = new Redis({
-  port: options.redis.port, // 端口号
-  host: options.redis.host, // ip
-  password: options.redis.password,
-  connectTimeout: 10000,
-  db: 0,
-});
-
+const { redis } = require("./init");
 // 设置键值对
 async function setKey(key, value) {
   try {

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const generateSig = require("@/utils/generateSig");
-const { getUserInfo } = require("@/utils/redis");
+const { getUserInfo } = require("@/redis");
 const { jwtSecret, expireTime } = require("@/config");
 
 /**

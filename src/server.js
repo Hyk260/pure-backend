@@ -5,7 +5,7 @@ const path = require("path");
 
 const mainRouter = require("./routes");
 const logMiddleware = require("./utils/logMiddleware");
-const userAuthorize = require("./utils/userAuthorize");
+// const userAuthorize = require("./utils/userAuthorize");
 const corsHandler = require("./utils/corsHandler");
 const jwtParser = require("./utils/jwtParser");
 const config = require("./config");
@@ -26,7 +26,7 @@ async function consturctServer(moduleDefs) {
   /* 设置静态文件目录 */
   app.use(express.static(path.join(process.cwd(), "public")));
   /* 自定义中间件JWT校验 */
-  app.use(userAuthorize);
+  // app.use(userAuthorize);
   /* 解析和验证JWT */
   app.use(jwtParser);
   /* 路由 */

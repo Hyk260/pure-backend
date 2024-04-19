@@ -1,12 +1,10 @@
 const fs = require("fs");
 const dotenv = require("dotenv");
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 const envPaths = [".env"];
 if (fs.existsSync(".env.local")) {
   envPaths.unshift(".env.local");
 }
-console.log(envPaths);
 // https://www.npmjs.com/package/dotenv
 const envFound = dotenv.config({
   path: envPaths,
@@ -14,6 +12,13 @@ const envFound = dotenv.config({
 
 if (envFound.error) {
   throw new Error("⚠️ Couldn't find .env file ⚠️");
+}
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+if (process.env.NODE_ENV === "development") {
+  process.env.REDIS_PORT = 6379;
+  process.env.REDIS_HOST = "127.0.0.1";
+  process.env.REDIS_USER = "";
+  process.env.REDIS_PASS = "";
 }
 
 module.exports = {
@@ -24,7 +29,9 @@ module.exports = {
   // jwt过期时间
   expireTime: 86400 * 7,
   // jwtAlgorithm: process.env.JWT_ALGO,
-  administrator: process.env.ADMIN_ISTRATOR, // app管理员id
+  // im app管理员id
+  administrator: process.env.ADMIN_ISTRATOR,
+  // im sdk
   imAppId: process.env.IM_SDK_APPID,
   imAppKey: process.env.IM_SDK_KEY,
   imServerBaseUrl: process.env.IM_SERVER_BASE_URL,
@@ -43,8 +50,8 @@ module.exports = {
     level: process.env.LOG_LEVEL || "silly",
   },
   redis: {
-    port: process.env.REDIS_PORT,
-    host: process.env.REDIS_HOST || "localhost",
+    port: process.env.REDIS_PORT || 6379,
+    host: process.env.REDIS_HOST || "127.0.0.1",
     charset: "utf8_general_ci",
     user: process.env.REDIS_USER,
     password: process.env.REDIS_PASS || "",

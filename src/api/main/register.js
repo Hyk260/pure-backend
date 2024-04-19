@@ -1,4 +1,4 @@
-const { getUserInfo, storeUsers } = require("@/utils/redis");
+const { getUserInfo, storeUsers } = require("@/redis");
 const { accountImport, accountCheck } = require("@/api/rest-api");
 
 const register = async (req, res) => {
@@ -16,9 +16,11 @@ const register = async (req, res) => {
     const userinfo = await getUserInfo(username);
     if (userinfo?.username == username) {
       res.json({ code: 200, msg: "账号已注册" });
-    } else {
+    } else if (userinfo) {
       await storeUsers([{ username, password }]);
       res.json({ code: 200, msg: "ok" });
+    } else {
+      res.json({ code: 400, msg: "err" });
     }
   } catch (error) {
     console.error("接口错误:", error);
