@@ -6,7 +6,7 @@ const { register } = require("@/api/main/register");
 const { restApi } = require("@/api/rest-api");
 
 router.get("/test", async (req, res) => {
-  res.json('test');
+  res.json("test");
 });
 /* POST 登录 */
 router.post("/login", login);

@@ -1,4 +1,12 @@
-const { redis } = require("./init");
+const options = require("@/config");
+
+let redis = null;
+if (options.redis.mode === "vercel") {
+  redis = require("@/velcel_kv/create-client");
+} else {
+  redis = require("./init").redis;
+}
+
 // 设置键值对
 async function setKey(key, value) {
   try {
@@ -39,13 +47,14 @@ async function deleteKey(key) {
 async function storeUsers(users) {
   try {
     for (const { username, password } of users) {
-      await redis.hset(
+      const res = await redis.hset(
         `user_accounts:${username}`,
         "username",
         username,
         "password",
         password
       );
+      console.log("存储用户信息", res);
     }
   } catch (error) {
     console.error("存储用户信息时出错:", error);
@@ -54,6 +63,7 @@ async function storeUsers(users) {
 async function getUserInfo(username) {
   try {
     const userData = await redis.hgetall(`user_accounts:${username}`);
+    console.log("查询用户信息", userData);
     return userData;
   } catch (error) {
     console.error("查询用户信息时出错:", error);
