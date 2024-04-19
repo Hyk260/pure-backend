@@ -1,5 +1,5 @@
 const Redis = require("ioredis");
-const options = require("@/config");
+const options = require("../config");
 
 const redis = new Redis({
   port: options.redis.port, // 端口号

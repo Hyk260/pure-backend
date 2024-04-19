@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { login } = require("@/api/main/login");
-const { register } = require("@/api/main/register");
-const { restApi } = require("@/api/rest-api");
+const { login } = require("../api/main/login");
+const { register } = require("../api/main/register");
+const { restApi } = require("../api/rest-api");
 
 router.get("/test", async (req, res) => {
   res.json("test");

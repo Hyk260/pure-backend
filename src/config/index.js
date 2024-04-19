@@ -5,14 +5,15 @@ const envPaths = [".env"];
 if (fs.existsSync(".env.local")) {
   envPaths.unshift(".env.local");
 }
+
 // https://www.npmjs.com/package/dotenv
 const envFound = dotenv.config({
   path: envPaths,
 });
-
 if (envFound.error) {
-  throw new Error("⚠️ Couldn't find .env file ⚠️");
+  console.error("⚠️  Couldn't find .env file  ⚠️");
 }
+
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 if (process.env.NODE_ENV === "development") {
   process.env.REDIS_PORT = 6379;

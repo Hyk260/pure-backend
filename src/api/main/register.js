@@ -1,5 +1,5 @@
-const { getUserInfo, storeUsers } = require("@/redis");
-const { accountImport, accountCheck } = require("@/api/rest-api");
+const { getUserInfo, storeUsers } = require("../../redis");
+const { accountImport, accountCheck } = require("../../api/rest-api");
 
 const register = async (req, res) => {
   try {

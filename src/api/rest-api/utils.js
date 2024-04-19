@@ -1,5 +1,5 @@
-const { imAppId, administrator } = require("@/config");
-const generateSig = require("@/utils/generateSig");
+const { imAppId, administrator } = require("../../config");
+const generateSig = require("../../utils/generateSig");
 
 let cachedSig = null;
 let cacheExpiration = null;

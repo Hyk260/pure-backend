@@ -1,5 +1,5 @@
 const COS = require("cos-nodejs-sdk-v5");
-const { secretId, secretKey, bucket, region } = require("@/config");
+const { secretId, secretKey, bucket, region } = require("../../config");
 const cos = new COS({ SecretId: secretId, SecretKey: secretKey });
 
 // https://cloud.tencent.com/document/product/436/8629

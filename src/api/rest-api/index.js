@@ -1,4 +1,4 @@
-const { service } = require("@/http/rest-api");
+const { service } = require("../../http/rest-api");
 const { randomInt32, buildURL } = require("./utils");
 // 查询帐号[{UserID: userid}]
 const accountCheck = async (params) => {

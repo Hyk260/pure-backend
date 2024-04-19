@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const generateSig = require("@/utils/generateSig");
-const { getUserInfo } = require("@/redis");
-const { jwtSecret, expireTime } = require("@/config");
+const generateSig = require("../../utils/generateSig");
+const { getUserInfo } = require("../../redis");
+const { jwtSecret, expireTime } = require("../../config");
 
 /**
  * 生成用户身份验证令牌

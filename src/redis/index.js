@@ -1,8 +1,8 @@
-const options = require("@/config");
+const options = require("../config");
 
 let redis = null;
 if (options.redis.mode === "vercel") {
-  redis = require("@/velcel_kv/create-client");
+  redis = require("../velcel_kv/create-client");
 } else {
   redis = require("./init").redis;
 }

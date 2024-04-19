@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { imServerBaseUrl } = require("@/config");
+const { imServerBaseUrl } = require("../config");
 
 // https://cloud.tencent.com/document/product/269/1519
 const service = axios.create({

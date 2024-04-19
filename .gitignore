@@ -18,4 +18,5 @@ app.exe
 
 #db
 /src/db
+/dist
 .vercel
