@@ -29,7 +29,7 @@ async function verifyUser(username, password) {
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    console.log("login", `user=${username}`, `password=${password}`);
+    console.log("login", `username=${username}`, `password=${password}`);
     if (!username || !password) {
       return res.status(400).json({ code: 400, msg: "请求不合法" });
     }
