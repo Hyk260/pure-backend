@@ -5,9 +5,9 @@
   "main": "app.js",
   "bin": "./index.js",
   "scripts": {
-    "dev": "node src/app.js",
-    "build": "node index.js",
-    "start": "nodemon --config nodemon.json src/app.js",
+    "dev": "node src/app.ts",
+    "build": "node index.ts",
+    "start": "nodemon --config nodemon.json src/app.ts",
     "pkgwin": "pkg . -t node16-win-x64 -o dist/app",
     "pkgmac": "pkg . -t node14-macos-x64 -o dist/app"
   },
@@ -40,7 +40,10 @@
   "devDependencies": {
     "eslint": "8.7.0",
     "nodemon": "^2.0.20",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "@types/node": "^18.11.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
   },
   "pkg": {
     "scripts": "module/*.js",

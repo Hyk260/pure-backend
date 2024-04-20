@@ -16,14 +16,14 @@ if (envFound.error) {
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 if (process.env.NODE_ENV === "development") {
-  process.env.REDIS_PORT = 6379;
+  process.env.REDIS_PORT = "6379";
   process.env.REDIS_HOST = "127.0.0.1";
   process.env.REDIS_USER = "";
   process.env.REDIS_PASS = "";
 }
 
 module.exports = {
-  port: parseInt(process.env.PORT),
+  port: process.env.PORT,
   nodeEnv: process.env.NODE_ENV,
   // databaseURL: process.env.MONGODB_URI,
   jwtSecret: process.env.JWT_SECRET,

@@ -1,3 +1,4 @@
+import { POST } from './api/chat/route.js';
 const express = require("express");
 const uploader = require("express-fileupload");
 const bodyParser = require("body-parser");
