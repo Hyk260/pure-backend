@@ -2,7 +2,7 @@
   "name": "pure-backend",
   "version": "lastest",
   "description": "PureChat API",
-  "main": "app.js",
+  "main": "index.js",
   "bin": "./index.js",
   "scripts": {
     "dev": "node src/app.js",
@@ -33,14 +33,14 @@
     "node-fetch": "^3.3.2",
     "openai": "^4.38.1",
     "pkg": "^5.8.0",
-    "prettier": "^2.8.1",
     "tls-sig-api-v2": "^1.0.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "prettier": "^3.2.5",
     "eslint": "8.7.0",
-    "nodemon": "^2.0.20",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.20"
   },
   "pkg": {
     "scripts": "module/*.js",

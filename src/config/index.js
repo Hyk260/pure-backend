@@ -16,7 +16,7 @@ if (envFound.error) {
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 if (process.env.NODE_ENV === "development") {
-  process.env.REDIS_PORT = 6379;
+  process.env.REDIS_PORT = "6379";
   process.env.REDIS_HOST = "127.0.0.1";
   process.env.REDIS_USER = "";
   process.env.REDIS_PASS = "";
@@ -54,7 +54,6 @@ module.exports = {
     mode: "vercel", // vercel
     port: process.env.REDIS_PORT || 6379,
     host: process.env.REDIS_HOST || "127.0.0.1",
-    charset: "utf8_general_ci",
     user: process.env.REDIS_USER,
     password: process.env.REDIS_PASS || "",
   },
