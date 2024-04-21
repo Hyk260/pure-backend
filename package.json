@@ -2,11 +2,12 @@
   "name": "pure-backend",
   "version": "lastest",
   "description": "PureChat API",
-  "main": "app.js",
-  "bin": "./index.js",
+  "type": "commonjs",
   "scripts": {
-    "dev": "node src/app.ts",
-    "build": "node index.ts",
+    "dev": "ts-node src/app.ts",
+    "build": "tsc",
+    "server": "node dist/app.js",
+    "tsn": "ts-node -r tsconfig-paths/register",
     "start": "nodemon --config nodemon.json src/app.ts",
     "pkgwin": "pkg . -t node16-win-x64 -o dist/app",
     "pkgmac": "pkg . -t node14-macos-x64 -o dist/app"
@@ -33,15 +34,16 @@
     "node-fetch": "^3.3.2",
     "openai": "^4.38.1",
     "pkg": "^5.8.0",
-    "prettier": "^2.8.1",
     "tls-sig-api-v2": "^1.0.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "prettier": "^3.2.5",
     "eslint": "8.7.0",
     "nodemon": "^2.0.20",
     "express": "^4.17.1",
     "@types/node": "^18.11.9",
+    "tsconfig-paths": "^4.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
   },
