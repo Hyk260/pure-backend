@@ -1,4 +1,5 @@
 const options = require("../config");
+const { ACCOUNTS } = require("./constants");
 
 let redis = null;
 if (options.redis.mode === "vercel") {
@@ -39,32 +40,35 @@ async function deleteKey(key) {
 }
 
 /**
- * 将用户信息存储到 Redis 数据库中
- * @param {Array<Object>} users - 包含用户信息的数组
- * @param {string} users[].username - 用户名
- * @param {string} users[].password - 密码
+ * 注册用户信息
  */
-async function storeUsers(users) {
+async function storeUsers({ username: name, password: pass }) {
   try {
-    for (const { username, password } of users) {
-      const res = await redis.hset(
-        `user_accounts:${username}`,
-        "username",
-        username,
-        "password",
-        password
-      );
-      console.log("存储用户信息", res);
-    }
+    const key = `${ACCOUNTS}:${name}`;
+    const res = await redis.hmset(key, "username", name, "password", pass);
+    console.log("存储用户信息", res);
   } catch (error) {
     console.error("存储用户信息时出错:", error);
   }
 }
+
+/**
+ * 查询用户信息
+ */
 async function getUserInfo(username) {
   try {
-    const userData = await redis.hgetall(`user_accounts:${username}`);
+    const key = `${ACCOUNTS}:${username}`;
+    const userData = await redis.hgetall(key);
     console.log("查询用户信息", userData);
     return userData;
+    // const user = await redis.hget(key, "username");
+    // const pass = await redis.hget(key, "password");
+    // console.log("查询用户信息", user, pass);
+    // if (!user && !pass) return null;
+    // return {
+    //   username: user,
+    //   password: pass,
+    // };
   } catch (error) {
     console.error("查询用户信息时出错:", error);
     return null;

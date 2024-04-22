@@ -4,11 +4,8 @@
   "description": "PureChat API",
   "type": "commonjs",
   "scripts": {
-    "dev": "ts-node src/app.ts",
-    "build": "tsc",
-    "server": "node dist/app.js",
-    "tsn": "ts-node -r tsconfig-paths/register",
-    "start": "nodemon --config nodemon.json src/app.ts",
+    "build": "node src/app.js",
+    "start": "nodemon --config nodemon.json src/app.js",
     "pkgwin": "pkg . -t node16-win-x64 -o dist/app",
     "pkgmac": "pkg . -t node14-macos-x64 -o dist/app"
   },

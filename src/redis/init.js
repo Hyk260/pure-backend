@@ -4,6 +4,7 @@ const options = require("../config");
 const redis = new Redis({
   port: options.redis.port, // 端口号
   host: options.redis.host, // ip
+  username: options.redis.user,
   password: options.redis.password,
   connectTimeout: 10000,
   db: 0,

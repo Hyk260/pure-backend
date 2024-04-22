@@ -19,7 +19,7 @@ function getToken(user) {
  */
 async function verifyUser(username, password) {
   const userData = await getUserInfo(username);
-  if (userData && userData?.password === password) {
+  if (userData && userData?.password == password) {
     const { password, ...data } = userData;
     return data;
   } else {

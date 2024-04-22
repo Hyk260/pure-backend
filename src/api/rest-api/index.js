@@ -32,7 +32,7 @@ const accountImport = async (params) => {
         // FaceUrl,
       },
     });
-    console.log("accountImport:", result);
+    console.log("注册im账号 accountImport:", result);
     const { ErrorCode } = result;
     if (ErrorCode !== 0) return ErrorInfo;
     return result;
