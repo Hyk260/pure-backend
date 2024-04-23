@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === "development") {
 module.exports = {
   port: process.env.PORT,
   nodeEnv: process.env.NODE_ENV,
+  isDev: process.env.NODE_ENV === "development",
   // databaseURL: process.env.MONGODB_URI,
   jwtSecret: process.env.JWT_SECRET,
   // jwt过期时间
@@ -51,16 +52,16 @@ module.exports = {
     level: process.env.LOG_LEVEL || "silly",
   },
   redis: {
-    mode: "", // vercel
+    mode: "", // vercel lowdb
     port: process.env.REDIS_PORT || 6379,
     host: process.env.REDIS_HOST || "127.0.0.1",
     charset: "utf8_general_ci",
-    user: process.env.REDIS_USER,
+    username: process.env.REDIS_USER,
     password: process.env.REDIS_PASS || "",
   },
   api: {
     prefix: "/api",
   },
   // jwt免token白名单接口
-  authOrity: ["/login", "/register", "/rest-api", "/test"],
+  authOrity: ["/login", "/register", "/rest-api", "/openai", "/test"],
 };

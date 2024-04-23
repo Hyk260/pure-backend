@@ -1,26 +1,41 @@
-import OpenAI from 'openai';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
- 
-// Create an OpenAI API client (that's edge friendly!)
+const OpenAI = require("openai");
+const { OpenAIStream, streamToResponse } = require("ai");
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+  // https://api.openai.com/v1/
+  baseURL: "https://api.nextapi.fun/v1/",
 });
- 
-// IMPORTANT! Set the runtime to edge
-export const runtime = 'edge';
- 
-export async function POST(req) {
-  const { messages } = await req.json();
- 
+
+async function handle(req, res) {
+  const { messages } = req.body;
+  // const ip = req.headers.get("x-forwarded-for");
+  // if (ip) {
+  //   console.log("Client IP:", ip);
+  // } else {
+  //   console.log("No X-Forwarded-For header found");
+  // }
   // Ask OpenAI for a streaming chat completion given the prompt
   const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo',
+    model: "gpt-3.5-turbo",
     stream: true,
-    messages,
+    messages: [
+      // {
+      //   role: "system",
+      //   content: "",
+      // },
+      // {
+      //   role: "assistant",
+      //   content: "",
+      // },
+      // ...messages,
+      { role: "user", content: "写一首诗词" },
+    ],
   });
- 
-  // Convert the response into a friendly text-stream
   const stream = OpenAIStream(response);
-  // Respond with the stream
-  return new StreamingTextResponse(stream);
+  return streamToResponse(stream, res);
 }
+
+module.exports = {
+  handle,
+};
