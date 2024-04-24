@@ -9,13 +9,15 @@ const openai = new OpenAI({
 
 async function handle(req, res) {
   const { messages } = req.body;
-  // const ip = req.headers.get("x-forwarded-for");
-  // if (ip) {
-  //   console.log("Client IP:", ip);
-  // } else {
-  //   console.log("No X-Forwarded-For header found");
-  // }
-  // Ask OpenAI for a streaming chat completion given the prompt
+  if (process.env.NODE_ENV !== "development") {
+    const ip = req.get("x-forwarded-for");
+    if (ip) {
+      console.log("Client IP:", ip);
+    } else {
+      console.log("No X-Forwarded-For header found");
+    }
+  }
+  // 在提示下询问OpenAI以完成流式聊天
   const response = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     stream: true,
@@ -28,10 +30,12 @@ async function handle(req, res) {
       //   role: "assistant",
       //   content: "",
       // },
-      // ...messages,
       { role: "user", content: "写一首诗词" },
+      // ...messages,
+      // ...newMessages
     ],
   });
+  console.log(response);
   const stream = OpenAIStream(response);
   return streamToResponse(stream, res);
 }

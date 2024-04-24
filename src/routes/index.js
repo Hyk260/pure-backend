@@ -10,7 +10,7 @@ router.get("/test", async (req, res) => {
   res.json("test");
 });
 /* POST 登录 */
-router.post("/openai", handle);
+router.post("/v1/chat/completions", handle);
 /* POST 登录 */
 router.post("/login", login);
 /* POST 注册 */

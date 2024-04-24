@@ -30,7 +30,8 @@ module.exports = {
   jwtSecret: process.env.JWT_SECRET,
   // jwt过期时间
   expireTime: 86400 * 7,
-  // jwtAlgorithm: process.env.JWT_ALGO,
+  // jwt算法 HS256
+  jwtAlgorithm: process.env.JWT_ALGO,
   // im app管理员id
   administrator: process.env.ADMIN_ISTRATOR,
   // im sdk
@@ -52,7 +53,7 @@ module.exports = {
     level: process.env.LOG_LEVEL || "silly",
   },
   redis: {
-    mode: "", // vercel lowdb
+    mode: "localhost", // vercel lowdb localhost
     port: process.env.REDIS_PORT || 6379,
     host: process.env.REDIS_HOST || "127.0.0.1",
     charset: "utf8_general_ci",
@@ -63,5 +64,12 @@ module.exports = {
     prefix: "/api",
   },
   // jwt免token白名单接口
-  authOrity: ["/login", "/register", "/rest-api", "/openai", "/test"],
+  authOrity: [
+    "/login",
+    "/register",
+    // "/rest-api",
+    "/openai",
+    "/test",
+    // '/v1/chat/completions'
+  ],
 };

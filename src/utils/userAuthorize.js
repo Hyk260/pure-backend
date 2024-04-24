@@ -24,19 +24,21 @@ function verifyJWT(token, secretKey) {
 }
 
 module.exports = async (req, res, next) => {
+  console.log(req.auth)
   // 从请求头中获取 JWT
-  const token = decoded(req);
-  // 如果是排除的路径 直接调用 next() 跳过 JWT 的检查
-  if (authOrity.includes(req.path)) return next();
-  if (!token) return next();
-  try {
-    const user = await verifyJWT(token, jwtSecret);
-    console.log(user, "JWT 携带用户信息");
-    // 校验成功 将解码后的数据保存到请求对象中
-    if (user) req.user = user;
-    next();
-  } catch (error) {
-    res.status(401).send({ msg: error });
-    next();
-  }
+  // const token = decoded(req);
+  // // 如果是排除的路径 直接调用 next() 跳过 JWT 的检查
+  // if (authOrity.includes(req.path)) return next();
+  // if (!token) return next();
+  // try {
+  //   const user = await verifyJWT(token, jwtSecret);
+  //   console.log("JWT 携带用户信息",user);
+  //   // 校验成功 将解码后的数据保存到请求对象中
+  //   if (user) req.user = user;
+  //   next();
+  // } catch (error) {
+  //   res.status(401).send({ msg: error });
+  //   next();
+  // }
+  next();
 };
