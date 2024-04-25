@@ -4,7 +4,7 @@ const { ACCOUNTS } = require("./constants");
 let redis = null;
 if (options.redis.mode === "vercel") {
   redis = require("../velcel_kv/create-client");
-} else if (options.redis.mode === "localhost" || !options.isDev){
+} else if (options.redis.mode === "localhost" && !options.isDev){
   redis = require("./init").redis;
 }
 

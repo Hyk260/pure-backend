@@ -12,7 +12,7 @@ const { options } = require("../config");
 function downloadFile(fileUrl, localFilePathRelative) {
   return new Promise((resolve, reject) => {
     // 构建完整的本地文件路径
-    const localFilePath = path.join(process.cwd(), localFilePathRelative);
+    const localFilePath = path.join(__dirname, localFilePathRelative);
     if (fs.existsSync(localFilePath)) {
       resolve("文件路径存在");
       return;
@@ -38,7 +38,7 @@ function downloadFile(fileUrl, localFilePathRelative) {
 
 // 使用示例：
 const fileUrl = options.lowdbUser;
-const localFilePathRelative = "src/db/user.json";
+const localFilePathRelative = "../db/user.json";
 
 downloadFile(fileUrl, localFilePathRelative)
   .then((res) => {
