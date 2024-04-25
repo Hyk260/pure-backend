@@ -2,14 +2,15 @@ const express = require("express");
 const uploader = require("express-fileupload");
 const bodyParser = require("body-parser");
 const path = require("path");
+const config = require("./config");
 
+require('./utils/init');
 const mainRouter = require("./routes");
 const logMiddleware = require("./utils/logMiddleware");
 // const userAuthorize = require("./utils/userAuthorize");
 const unAuthorzed = require("./utils/unAuthorzed");
 const corsHandler = require("./utils/corsHandler");
 const jwtParser = require("./utils/jwtParser");
-const config = require("./config");
 
 /* 构建服务器 */
 async function consturctServer(moduleDefs) {

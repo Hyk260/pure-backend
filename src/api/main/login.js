@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const generateSig = require("../../utils/generateSig");
 const { getUserInfo } = require("../../redis");
-const { jwtSecret, expireTime } = require("../../config");
+const { jwtSecret, expireTime, isDev, redis } = require("../../config");
 
 /**
  * 生成用户身份验证令牌
@@ -26,6 +26,19 @@ async function verifyUser(username, password) {
     return false;
   }
 }
+
+function handleLoginSuccess(res, user) {
+  const { username } = user;
+  res.setHeader("Access-Control-Expose-Headers", "x-token");
+  // 注意默认情况 Token 必须以 Bearer+空格 开头
+  res.setHeader("X-token", `Bearer ${getToken(user)}`);
+  const data = {
+    username,
+    userSig: generateSig({ identifier: username }),
+  };
+  res.json({ code: 200, msg: "登录成功", result: data });
+}
+
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -33,13 +46,14 @@ const login = async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({ code: 400, msg: "请求不合法" });
     }
+    // 用于测试环境 无数据库 情况下免密码登陆
+    if (isDev && redis.mode == "") {
+      handleLoginSuccess(res, { username });
+      return;
+    }
     const user = await verifyUser(username, password);
     if (user) {
-      res.setHeader("Access-Control-Expose-Headers", "x-token");
-      // 注意默认情况 Token 必须以 Bearer+空格 开头
-      res.setHeader("X-token", `Bearer ${getToken(user)}`);
-      user.userSig = generateSig({ identifier: username });
-      res.json({ code: 200, msg: "登录成功", result: user });
+      handleLoginSuccess(res, user);
     } else {
       res.json({ code: 401, msg: "用户名或密码不正确" });
     }

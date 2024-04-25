@@ -15,8 +15,8 @@ access.log
 
 # dist
 app.exe
-
-#db
-/src/db
 /dist
 .vercel
+
+# db
+src/db/user.json

@@ -1,5 +1,5 @@
 const OpenAI = require("openai");
-const { OpenAIStream, streamToResponse } = require("ai");
+// const { OpenAIStream, streamToResponse } = require("ai");
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -36,8 +36,8 @@ async function handle(req, res) {
     ],
   });
   console.log(response);
-  const stream = OpenAIStream(response);
-  return streamToResponse(stream, res);
+  // const stream = OpenAIStream(response);
+  // return streamToResponse(stream, res);
 }
 
 module.exports = {

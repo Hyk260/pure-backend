@@ -46,6 +46,7 @@ module.exports = {
   // chatgpt
   openaiApiKey: process.env.OPENAI_API_KEY,
   options: {
+    lowdbUser: `${process.env.LOWDB_URL}user.json`,
     // app absolute path
     basedir: __dirname,
   },
@@ -53,7 +54,7 @@ module.exports = {
     level: process.env.LOG_LEVEL || "silly",
   },
   redis: {
-    mode: "localhost", // vercel lowdb localhost
+    mode: "", // vercel lowdb localhost
     port: process.env.REDIS_PORT || 6379,
     host: process.env.REDIS_HOST || "127.0.0.1",
     charset: "utf8_general_ci",

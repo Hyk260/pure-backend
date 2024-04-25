@@ -9,7 +9,7 @@ const { handle } = require("../api/chat/route");
 router.get("/test", async (req, res) => {
   res.json("test");
 });
-/* POST 登录 */
+/* completions */
 router.post("/v1/chat/completions", handle);
 /* POST 登录 */
 router.post("/login", login);
