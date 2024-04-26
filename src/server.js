@@ -4,7 +4,9 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const config = require("./config");
 
-require('./utils/init');
+// require('./utils/init');
+require('./lowdb/init');
+
 const mainRouter = require("./routes");
 const logMiddleware = require("./utils/logMiddleware");
 // const userAuthorize = require("./utils/userAuthorize");

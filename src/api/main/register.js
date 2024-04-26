@@ -1,5 +1,12 @@
-const { getUserInfo, storeUsers } = require("../../redis");
+const { storeUsers } = require("../../redis");
 const { accountImport, accountCheck } = require("../../api/rest-api");
+
+async function registerAccount(user) {
+  // 查询im账号
+  const account = await accountCheck([{ UserID: user }]);
+  // 注册im账号
+  !account && (await accountImport({ UserID: user, Nick: "" }));
+}
 
 const register = async (req, res) => {
   try {
@@ -8,21 +15,12 @@ const register = async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({ code: 400, msg: "请求不合法" });
     }
-    const account = await accountCheck([{ UserID: username }]);
-    if (!account) {
-      // 注册im账号
-      await accountImport({ UserID: username, Nick: "" });
-    }
-    const userinfo = await getUserInfo(username);
-    if (userinfo?.username == username) {
-      res.json({ code: 200, msg: "账号已注册" });
-    } else {
-      try {
-        await storeUsers({ username, password });
-        res.json({ code: 200, msg: "ok" });
-      } catch (error) {
-        res.json({ code: 400, msg: "err" });
-      }
+    await registerAccount(username);
+    try {
+      await storeUsers({ username, password });
+      res.json({ code: 200, msg: "ok" });
+    } catch (error) {
+      res.json({ code: 400, msg: "err" });
     }
   } catch (error) {
     console.error("接口错误:", error);

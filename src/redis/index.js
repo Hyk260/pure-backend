@@ -2,9 +2,10 @@ const options = require("../config");
 const { ACCOUNTS } = require("./constants");
 
 let redis = null;
-if (options.redis.mode === "vercel") {
+let isVelcerKv = options.redis.mode === "vercel";
+if (isVelcerKv) {
   redis = require("../velcel_kv/create-client");
-} else if (options.redis.mode === "localhost" && !options.isDev){
+} else if (options.redis.mode === "localhost" && !options.isDev) {
   redis = require("./init").redis;
 }
 
@@ -45,7 +46,7 @@ async function deleteKey(key) {
 async function storeUsers({ username: name, password: pass }) {
   try {
     const key = `${ACCOUNTS}:${name}`;
-    const res = await redis.hmset(key, "username", name, "password", pass);
+    const res = await redis.hset(key, "username", name, "password", pass);
     console.log("存储用户信息", res);
   } catch (error) {
     console.error("存储用户信息时出错:", error);
@@ -57,18 +58,15 @@ async function storeUsers({ username: name, password: pass }) {
  */
 async function getUserInfo(username) {
   try {
+    if(isVelcerKv){
+      const userData = await getKey(username);
+      console.log("查询用户信息", userData.username);
+      return userData
+    }
     const key = `${ACCOUNTS}:${username}`;
     const userData = await redis.hgetall(key);
     console.log("查询用户信息", userData);
     return userData;
-    // const user = await redis.hget(key, "username");
-    // const pass = await redis.hget(key, "password");
-    // console.log("查询用户信息", user, pass);
-    // if (!user && !pass) return null;
-    // return {
-    //   username: user,
-    //   password: pass,
-    // };
   } catch (error) {
     console.error("查询用户信息时出错:", error);
     return null;

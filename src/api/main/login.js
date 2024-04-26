@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const generateSig = require("../../utils/generateSig");
-const { getUserInfo } = require("../../redis");
+const { getUserInfo, getKey } = require("../../redis");
 const { jwtSecret, expireTime, isDev, redis } = require("../../config");
 
 /**
@@ -51,6 +51,7 @@ const login = async (req, res) => {
       handleLoginSuccess(res, { username });
       return;
     }
+    console.log(JSON.parse(JSON.stringify(await getKey(username))).username );
     const user = await verifyUser(username, password);
     if (user) {
       handleLoginSuccess(res, user);
