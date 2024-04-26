@@ -1,11 +1,14 @@
 const options = require("../config");
 const { ACCOUNTS } = require("./constants");
+const { lowdbUser } = require("../lowdb/init");
 
 let redis = null;
 let isVelcerKv = options.redis.mode === "vercel";
+let isLocalhost = options.redis.mode === "localhost" && !options.isDev;
+let isLowdb = options.redis.mode === "lowdb";
 if (isVelcerKv) {
   redis = require("../velcel_kv/create-client");
-} else if (options.redis.mode === "localhost" && !options.isDev) {
+} else if (isLocalhost) {
   redis = require("./init").redis;
 }
 
@@ -45,6 +48,16 @@ async function deleteKey(key) {
  */
 async function storeUsers({ username: name, password: pass }) {
   try {
+    if (isLowdb) {
+      // 是否注册
+      const isExist = lowdbUser.get("user").find({ username: name }).value();
+      if (isExist) {
+        return "已注册";
+      } else {
+        lowdbUser.get("user").push({ username, password }).write();
+        return "注册成功";
+      }
+    }
     const key = `${ACCOUNTS}:${name}`;
     const res = await redis.hset(key, "username", name, "password", pass);
     console.log("存储用户信息", res);
@@ -58,10 +71,10 @@ async function storeUsers({ username: name, password: pass }) {
  */
 async function getUserInfo(username) {
   try {
-    if(isVelcerKv){
-      const userData = await getKey(username);
-      console.log("查询用户信息", userData.username);
-      return userData
+    if (isLowdb) {
+      const userData = lowdbUser.get("user").find({ username }).value();
+      console.log("查询用户信息", userData);
+      return userData;
     }
     const key = `${ACCOUNTS}:${username}`;
     const userData = await redis.hgetall(key);

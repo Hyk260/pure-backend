@@ -1,43 +1,39 @@
-const low = require("lowdb");
+const lowdb = require("lowdb");
 const path = require("path");
 const FileSync = require("lowdb/adapters/FileSync");
-const crypto = require("crypto");
+const CryptoJS = require("crypto-js");
+
 const dbUser = path.resolve(__dirname, "../db/user.json");
+const secretKey = process.env.LOWDB_ENCRYPTION_KEY;
 
-// 加密密钥
-const ENCRYPTION_KEY = process.env.LOWDB_ENCRYPTION_KEY;
-
-// 简单加密函数
-function encrypt(text) {
-  const cipher = crypto.createCipher("aes-256-cbc", ENCRYPTION_KEY);
-  let encrypted = cipher.update(text, "utf8", "hex");
-  encrypted += cipher.final("hex");
-  return encrypted;
+function encrypt(data) {
+  return CryptoJS.AES.encrypt(data, secretKey).toString();
 }
 
-// 简单解密函数
-function decrypt(text) {
-  const decipher = crypto.createDecipher("aes-256-cbc", ENCRYPTION_KEY);
-  let decrypted = decipher.update(text, "hex", "utf8");
-  decrypted += decipher.final("utf8");
-  return decrypted;
+function decrypt(data) {
+  const bytes = CryptoJS.AES.decrypt(data, secretKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
 }
 
-// 创建一个加密的adapter
 const adapter = new FileSync(dbUser, {
   serialize: (data) => encrypt(JSON.stringify(data)),
   deserialize: (data) => JSON.parse(decrypt(data)),
 });
 
 // 初始化lowdb
-const db = low(adapter);
+const lowdbUser = lowdb(adapter);
 
 // 设置初始数据
-db.defaults({ posts: [] }).write();
+// lowdbUser.defaults({ user: [] }).write();
 
 // 写入数据
-db.get("posts").push({ id: 1, title: "lowdb is awesome" }).write();
+// lowdbUser.get("user").push({ username: "admin", password: "123456" }).write();
 
 // 读取数据
-const posts = db.get("posts").value();
-console.log(posts);
+// const user = lowdbUser.get("user").find({ username:"admin", password:'123456' }).value();
+const user = lowdbUser.get("user").value();
+console.log(user, 'user');
+
+module.exports = {
+  lowdbUser,
+};

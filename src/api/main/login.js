@@ -51,7 +51,6 @@ const login = async (req, res) => {
       handleLoginSuccess(res, { username });
       return;
     }
-    console.log(JSON.parse(JSON.stringify(await getKey(username))).username );
     const user = await verifyUser(username, password);
     if (user) {
       handleLoginSuccess(res, user);

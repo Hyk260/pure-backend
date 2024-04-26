@@ -17,8 +17,8 @@ const register = async (req, res) => {
     }
     await registerAccount(username);
     try {
-      await storeUsers({ username, password });
-      res.json({ code: 200, msg: "ok" });
+      const msg = await storeUsers({ username, password });
+      res.json({ code: 200, msg });
     } catch (error) {
       res.json({ code: 400, msg: "err" });
     }
