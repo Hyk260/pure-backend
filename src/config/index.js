@@ -50,6 +50,10 @@ module.exports = {
     // app absolute path
     basedir: __dirname,
   },
+  github: {
+    githubClientId: process.env.CLIENT_ID,
+    githubClientSecret: process.env.CLIENT_SECRET,
+  },
   logs: {
     level: process.env.LOG_LEVEL || "silly",
   },
@@ -69,8 +73,9 @@ module.exports = {
     "/login",
     "/register",
     // "/rest-api",
-    "/openai",
     "/test",
+    "/auth/github",
+    "/github/callback",
     // '/v1/chat/completions'
   ],
 };

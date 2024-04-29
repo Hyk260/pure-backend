@@ -31,8 +31,8 @@ const lowdbUser = lowdb(adapter);
 
 // 读取数据
 // const user = lowdbUser.get("user").find({ username:"admin", password:'123456' }).value();
-const user = lowdbUser.get("user").value();
-console.log(user, 'user');
+// const user = lowdbUser.get("user").value();
+// console.log(user, 'user');
 
 module.exports = {
   lowdbUser,
