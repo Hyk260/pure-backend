@@ -15,10 +15,12 @@ router.get("/test", async (req, res) => {
 router.post("/login", login);
 /* POST im rest-api */
 router.post("/rest-api", restApi);
+/* GET github oauth */
+router.get("/auth/github", githubOauthAuthorize);
+/* GET github callback */
+router.get("/github/callback", githubCallback);
 
 if (isDev) {
-  router.get("/auth/github", githubOauthAuthorize);
-  router.get("/github/callback", githubCallback);
   /* completions */
   router.post("/v1/chat/completions", handle);
   /* POST 注册 */

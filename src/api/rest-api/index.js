@@ -218,7 +218,7 @@ const createOfficialAccount = async (params) => {
     method: "post",
     data: {
       OfficialAccountUserID: "@TOA#_test_id", // 自定义公众号ID的前缀必须是@TOA#_
-      Owner_Account: "huangyk",
+      Owner_Account: "",
       CustomString: "",
       FaceUrl:
         "https://ljx-1307934606.cos.ap-beijing.myqcloud.com/official_account.png",
