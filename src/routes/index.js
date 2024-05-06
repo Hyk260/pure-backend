@@ -5,7 +5,7 @@ const { isDev } = require("../config");
 const { login } = require("../api/main/login");
 const { register } = require("../api/main/register");
 const { restApi } = require("../api/rest-api");
-const { handle } = require("../api/chat/route");
+const { completions } = require("../api/chat/route");
 const { githubOauthAuthorize, githubCallback } = require("./auth");
 
 router.get("/test", async (req, res) => {
@@ -22,7 +22,7 @@ router.get("/github/callback", githubCallback);
 
 if (isDev) {
   /* completions */
-  router.post("/v1/chat/completions", handle);
+  router.post("/v1/chat/completions", completions);
   /* POST 注册 */
   router.post("/register", register);
 }

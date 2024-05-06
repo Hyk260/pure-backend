@@ -76,6 +76,6 @@ module.exports = {
     "/test",
     "/auth/github",
     "/github/callback",
-    // '/v1/chat/completions'
+    '/v1/chat/completions'
   ],
 };
