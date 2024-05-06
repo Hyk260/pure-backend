@@ -231,6 +231,33 @@ const createOfficialAccount = async (params) => {
   console.log(result, "创建公众号");
   return result;
 };
+// 获取 App 中的所有群组
+const getAppidGroupList = async () => {
+  const result = await service({
+    url: buildURL("v4/group_open_http_svc/get_appid_group_list"),
+    method: "post",
+    data: {
+      Limit: 1000,
+      Next: 0,
+    },
+  });
+  console.log(result, "拉取群组");
+  console.log(result);
+  return result;
+};
+// 获取群详细资料
+const getGroupInfo = async (params) => {
+  const result = await service({
+    url: buildURL("v4/group_open_http_svc/get_group_info"),
+    method: "post",
+    data: {
+      GroupIdList: params, // [ "@TGS#1NVTZEAE4", "@TGS#1CXTZEAET" ],
+    },
+  });
+  console.log(result, "获取群详细资料");
+  console.log(result);
+  return result;
+};
 
 const fun = {
   accountImport,
@@ -245,6 +272,8 @@ const fun = {
   createRobot,
   modifyC2cMsg,
   adminGetroammsg,
+  getAppidGroupList,
+  getGroupInfo,
 };
 
 const restApi = async (req, res) => {
