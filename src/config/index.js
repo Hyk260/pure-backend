@@ -7,9 +7,8 @@ if (fs.existsSync(".env.local")) {
 }
 
 // https://www.npmjs.com/package/dotenv
-const envFound = dotenv.config({
-  path: envPaths,
-});
+const envFound = dotenv.config({ path: envPaths });
+
 if (envFound.error) {
   console.error("⚠️  Couldn't find .env file  ⚠️");
 }
@@ -54,6 +53,10 @@ module.exports = {
     githubClientId: process.env.CLIENT_ID,
     githubClientSecret: process.env.CLIENT_SECRET,
   },
+  gitee: {
+    giteeClientId: process.env.GITEE_CLIENT_ID,
+    giteeClientSecret: process.env.GITEE_CLIENT_SECRET,
+  },
   logs: {
     level: process.env.LOG_LEVEL || "silly",
   },
@@ -70,12 +73,13 @@ module.exports = {
   },
   // jwt免token白名单接口
   authOrity: [
+    "/market",
     "/login",
     "/register",
     // "/rest-api",
     "/test",
     "/auth/github",
     "/github/callback",
-    '/v1/chat/completions'
+    "/v1/chat/completions",
   ],
 };
