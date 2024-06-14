@@ -1,6 +1,6 @@
 {
   "restartable": "rs",
-  "ignore": [".git", "node_modules/", "dist/","db/"],
+  "ignore": [".git", "node_modules/", "dist/"],
   "watch": ["src/"],
   "env": {
     "NODE_ENV": "development"
