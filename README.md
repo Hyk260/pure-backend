@@ -2,6 +2,10 @@
 
 PureChat Node.js API service
 
+# 开发
+- 首次运行清空 src/db/user.json 文件
+- 启动 npm run start
+
 # 部署
 - vercel login：登录 Vercel 账号
 - vercel dev：本地开启服务
