@@ -28,7 +28,7 @@ module.exports = {
   // databaseURL: process.env.MONGODB_URI,
   jwtSecret: process.env.JWT_SECRET,
   // jwt过期时间
-  expireTime: 86400 * 7,
+  expireTime: 86400 * 14,
   // jwt算法 HS256
   jwtAlgorithm: process.env.JWT_ALGO,
   // im app管理员id
@@ -48,6 +48,7 @@ module.exports = {
     lowdbUser: `${process.env.LOWDB_URL}user.json`,
     // app absolute path
     basedir: __dirname,
+    dataBaseMode: 'lowdb' // vercel lowdb localhost 
   },
   github: {
     githubClientId: process.env.CLIENT_ID,
@@ -61,7 +62,6 @@ module.exports = {
     level: process.env.LOG_LEVEL || "silly",
   },
   redis: {
-    mode: "lowdb", // vercel lowdb localhost
     port: process.env.REDIS_PORT || 6379,
     host: process.env.REDIS_HOST || "127.0.0.1",
     charset: "utf8_general_ci",

@@ -1,11 +1,14 @@
-const options = require("../config");
+const { options, isDev } = require("../config");
 const { ACCOUNTS } = require("./constants");
 const { lowdbUser } = require("../lowdb/init");
 
+const { dataBaseMode } = options;
+
 let redis = null;
-let isVelcerKv = options.redis.mode === "vercel";
-let isLocalhost = options.redis.mode === "localhost" && !options.isDev;
-let isLowdb = options.redis.mode === "lowdb";
+let isVelcerKv = dataBaseMode === "vercel";
+let isLocalhost = dataBaseMode === "localhost" && !isDev;
+let isLowdb = dataBaseMode === "lowdb";
+
 if (isVelcerKv) {
   redis = require("../velcel_kv/create-client");
 } else if (isLocalhost) {

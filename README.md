@@ -3,8 +3,8 @@
 PureChat Node.js API service
 
 # 开发
-- 首次运行清空 src/db/user.json 文件
-- 启动 npm run start
+- src/db/userCopy.json 添加自定义用户信息 测试账号默认密码123456
+- 启动 npm run dev
 
 # 部署
 - vercel login：登录 Vercel 账号

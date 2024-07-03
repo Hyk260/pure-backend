@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const generateSig = require("../../utils/generateSig");
-const { getUserInfo, getKey } = require("../../redis");
-const { jwtSecret, expireTime, isDev, redis } = require("../../config");
+const { getUserInfo } = require("../../redis");
+const { jwtSecret, expireTime, isDev, options } = require("../../config");
 
 /**
  * 生成用户身份验证令牌
@@ -47,7 +47,7 @@ const login = async (req, res) => {
       return res.status(400).json({ code: 400, msg: "请求不合法" });
     }
     // 用于测试环境 无数据库 情况下免密码登陆
-    if (isDev && redis.mode == "") {
+    if (isDev && options.dataBaseMode == "") {
       handleLoginSuccess(res, { username });
       return;
     }
