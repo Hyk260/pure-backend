@@ -1,35 +1,43 @@
-const { github } = require("../config");
-const { getUserInfo } = require("../api/github");
+const GitHubAPI = require("../api/github");
 const { registerAccount } = require("../api/main/register");
+const { getGitHubSecretKey } = require('../utils/common')
 const { handleLoginSuccess } = require("../api/main/login");
 
-// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
-function githubOauthAuthorize(req, res) {
+function authorize(req, res) {
+  const { client } = req.query
+  const { clientId } = getGitHubSecretKey(client)
+
   const query = new URLSearchParams({
-    client_id: github.githubClientId,
+    client_id: clientId,
     // scope: '',
     // allow_signup: 'true',
-    // ...req.query,
   });
+
   const url = `https://github.com/login/oauth/authorize?${query.toString()}`;
-  res.json(url);
+  res.json({ url });
 }
 
-async function githubCallback(req, res) {
-  const { code } = req.query;
-  const userInfo = await getUserInfo(code);
-  if (userInfo) {
-    // avatar_url id login
+async function callback(req, res) {
+  const { code, client } = req.query;
+
+  try {
+    const userInfo = await GitHubAPI.getUserInfo(code, client);
+    if (!userInfo) {
+      return res.status(400).json({ error: "授权失败" });
+    }
+
     const { avatar_url, id, login } = userInfo;
     console.log(avatar_url, id, login);
+
     await registerAccount({ user: id.toString(), nick: login, avatar: avatar_url });
     handleLoginSuccess(res, { username: id.toString() });
-  } else {
-    res.json("授权失败");
+  } catch (error) {
+    console.error("Error during GitHub OAuth callback:", error);
+    res.status(500).json({ error: "服务器内部错误" });
   }
 }
 
 module.exports = {
-  githubOauthAuthorize,
-  githubCallback,
+  githubOauthAuthorize: authorize,
+  githubCallback: callback,
 };

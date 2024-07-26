@@ -51,12 +51,12 @@ module.exports = {
     dataBaseMode: 'lowdb' // vercel lowdb localhost 
   },
   github: {
-    githubClientId: process.env.CLIENT_ID,
-    githubClientSecret: process.env.CLIENT_SECRET,
-  },
-  gitee: {
-    giteeClientId: process.env.GITEE_CLIENT_ID,
-    giteeClientSecret: process.env.GITEE_CLIENT_SECRET,
+    // web
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    // electron
+    clientIdApp: process.env.CLIENT_ID_APP,
+    clientSecretApp: process.env.CLIENT_SECRET_APP,
   },
   logs: {
     level: process.env.LOG_LEVEL || "silly",
@@ -76,10 +76,9 @@ module.exports = {
     "/market",
     "/login",
     "/register",
-    // "/rest-api",
     "/test",
     "/auth/github",
-    "/github/callback",
+    "/auth/github/callback",
     "/v1/chat/completions",
   ],
 };

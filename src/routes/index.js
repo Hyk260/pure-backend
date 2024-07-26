@@ -23,7 +23,7 @@ router.post("/rest-api", restApi);
 /* GET github oauth */
 router.get("/auth/github", githubOauthAuthorize);
 /* GET github callback */
-router.get("/github/callback", githubCallback);
+router.get("/auth/github/callback", githubCallback);
 
 if (isDev) {
   /* completions */

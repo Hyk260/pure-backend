@@ -9,6 +9,7 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 access.log
+package-lock.json
 
 # dotenv environment variables file
 .env.local
