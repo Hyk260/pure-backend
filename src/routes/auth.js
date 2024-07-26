@@ -38,6 +38,6 @@ async function callback(req, res) {
 }
 
 module.exports = {
-  githubOauthAuthorize: authorize,
-  githubCallback: callback,
+  authorize,
+  callback,
 };

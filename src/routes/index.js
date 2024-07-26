@@ -8,7 +8,7 @@ const { restApi } = require("../api/rest-api");
 const market = require("../api/main/market");
 
 // const { completions } = require("../api/chat/route");
-const { githubOauthAuthorize, githubCallback } = require("./auth");
+const { authorize, callback } = require("./auth");
 
 router.get("/test", async (req, res) => {
   res.json("test");
@@ -21,9 +21,9 @@ router.post("/login", login);
 /* POST im rest-api */
 router.post("/rest-api", restApi);
 /* GET github oauth */
-router.get("/auth/github", githubOauthAuthorize);
+router.get("/auth/github", authorize);
 /* GET github callback */
-router.get("/auth/github/callback", githubCallback);
+router.get("/auth/github/callback", callback);
 
 if (isDev) {
   /* completions */
