@@ -30,7 +30,7 @@ module.exports = {
   // jwt过期时间
   expireTime: 86400 * 14,
   // jwt算法 HS256
-  jwtAlgorithm: process.env.JWT_ALGO,
+  jwtAlgorithm: process.env.JWT_ALGO || "HS256",
   // im app管理员id
   administrator: process.env.ADMIN_ISTRATOR,
   // im sdk
