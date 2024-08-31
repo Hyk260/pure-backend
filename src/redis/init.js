@@ -22,4 +22,4 @@ redis.on("error", (err) => {
   redis.quit();
 });
 
-module.exports = { redis };
+module.exports = redis

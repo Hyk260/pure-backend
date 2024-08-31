@@ -1,18 +1,17 @@
-const { options, isDev } = require("../config");
+const { options } = require("../config");
 const { ACCOUNTS } = require("./constants");
-const { lowdbUser } = require("../lowdb/init");
+const { storeLowdbUsers, getLowdbUserInfo } = require("../lowdb/index");
 
 const { dataBaseMode } = options;
 
 let redis = null;
-let isVelcerKv = dataBaseMode === "vercel";
-let isLocalhost = dataBaseMode === "localhost" && !isDev;
-let isLowdb = dataBaseMode === "lowdb";
+const localRedis = dataBaseMode === "localRedis"; // 使用本地redis
+const lowdb = dataBaseMode === "lowdb"; // 使用lowdb
+// https://app.redislabs.com/
+const redisCloud = dataBaseMode === "redisCloud"; // 使用redisCloud
 
-if (isVelcerKv) {
-  redis = require("../velcel_kv/create-client");
-} else if (isLocalhost) {
-  redis = require("./init").redis;
+if (localRedis || redisCloud) {
+  redis = require("./init");
 }
 
 // 设置键值对
@@ -51,16 +50,10 @@ async function deleteKey(key) {
  */
 async function storeUsers({ username: name, password: pass }) {
   try {
-    if (isLowdb) {
-      // 是否注册
-      const isExist = lowdbUser.get("user").find({ username: name }).value();
-      if (isExist) {
-        return "已注册";
-      } else {
-        lowdbUser.get("user").push({ username, password }).write();
-        return "注册成功";
-      }
+    if (lowdb) {
+      return storeLowdbUsers({ username: name, password: pass });
     }
+
     const key = `${ACCOUNTS}:${name}`;
     const res = await redis.hset(key, "username", name, "password", pass);
     console.log("存储用户信息", res);
@@ -74,11 +67,10 @@ async function storeUsers({ username: name, password: pass }) {
  */
 async function getUserInfo(username) {
   try {
-    if (isLowdb) {
-      const userData = lowdbUser.get("user").find({ username }).value();
-      console.log("查询用户信息", userData);
-      return userData;
+    if (lowdb) {
+      return getLowdbUserInfo(username);
     }
+
     const key = `${ACCOUNTS}:${username}`;
     const userData = await redis.hgetall(key);
     console.log("查询用户信息", userData);

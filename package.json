@@ -12,10 +12,6 @@
     "build:pkgmac": "pkg . -t node14-macos-x64 -o dist/app"
   },
   "dependencies": {
-    "@babel/core": "^7.24.4",
-    "@babel/node": "^7.23.9",
-    "@babel/preset-env": "^7.24.4",
-    "@vercel/kv": "^1.0.1",
     "@vercel/node": "^2.8.4",
     "ai": "^3.0.24",
     "axios": "^1.1.3",

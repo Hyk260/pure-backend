@@ -14,12 +14,6 @@ if (envFound.error) {
 }
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
-if (process.env.NODE_ENV === "development") {
-  process.env.REDIS_PORT = "6379";
-  process.env.REDIS_HOST = "127.0.0.1";
-  process.env.REDIS_USER = "";
-  process.env.REDIS_PASS = "";
-}
 
 module.exports = {
   port: process.env.PORT,
@@ -48,7 +42,7 @@ module.exports = {
     lowdbUser: `${process.env.LOWDB_URL}user.json`,
     // app absolute path
     basedir: __dirname,
-    dataBaseMode: 'lowdb' // vercel lowdb localhost 
+    dataBaseMode: 'lowdb' // lowdb localRedis redisCloud
   },
   github: {
     // web
@@ -65,7 +59,7 @@ module.exports = {
     port: process.env.REDIS_PORT || 6379,
     host: process.env.REDIS_HOST || "127.0.0.1",
     charset: "utf8_general_ci",
-    username: process.env.REDIS_USER,
+    username: process.env.REDIS_USER || "",
     password: process.env.REDIS_PASS || "",
   },
   api: {
