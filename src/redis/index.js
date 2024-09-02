@@ -8,9 +8,9 @@ let redis = null;
 const localRedis = dataBaseMode === "localRedis"; // 使用本地redis
 const lowdb = dataBaseMode === "lowdb"; // 使用lowdb
 // https://app.redislabs.com/
-const redisCloud = dataBaseMode === "redisCloud"; // 使用redisCloud
+const cloudRedis = dataBaseMode === "cloudRedis"; // 使用cloudRedis
 
-if (localRedis || redisCloud) {
+if (localRedis || cloudRedis) {
   redis = require("./init");
 }
 
