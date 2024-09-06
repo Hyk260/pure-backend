@@ -12,7 +12,7 @@ const corsHandler = require("./utils/corsHandler");
 const jwtParser = require("./utils/jwtParser");
 
 /* 构建服务器 */
-async function consturctServer(moduleDefs) {
+async function constructServer(moduleDefs) {
   const app = express();
   console.log("config:", config);
   /* CORS 处理跨域请求 */
@@ -34,18 +34,21 @@ async function consturctServer(moduleDefs) {
   app.use("/", mainRouter);
   /* 处理未经授权的错误 */
   app.use(unAuthorzed);
+  
   return app;
 }
 
 /* Serve the NCM API. */
 async function serveNcmApi(options) {
   const port = Number(options.port || process.env.PORT);
-  const host = options.host || process.env.HOST;
-  const app = await consturctServer(options.moduleDefs);
-  const appExt = app;
-  appExt.server = app.listen(port, host, () => {
-    console.log(`server running @ http://${host ? host : "localhost"}:${port}`);
+  const host = options.host || process.env.HOST || "localhost";
+
+  const appExt = await constructServer(options.moduleDefs);
+
+  appExt.listen(port, host, () => {
+    console.log(`server running @ http://${host}:${port}`);
   });
+
   return appExt;
 }
 

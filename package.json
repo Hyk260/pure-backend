@@ -1,6 +1,6 @@
 {
   "name": "pure-backend",
-  "version": "lastest",
+  "version": "1.0.0",
   "description": "PureChat API",
   "type": "commonjs",
   "scripts": {

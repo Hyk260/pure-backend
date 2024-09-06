@@ -88,8 +88,8 @@ function quit() {
 module.exports = {
   storeUsers,
   getUserInfo,
-  setKey,
-  getKey,
-  deleteKey,
-  quit,
+  // setKey,
+  // getKey,
+  // deleteKey,
+  // quit,
 };

@@ -35,6 +35,7 @@ function handleLoginSuccess(res, user) {
   const data = {
     username,
     userSig: generateSig({ identifier: username }),
+    openaiApiKey: user?.openaiApiKey ?? "",
   };
   res.json({ code: 200, msg: "登录成功", result: data });
 }
@@ -47,11 +48,12 @@ const login = async (req, res) => {
       return res.status(400).json({ code: 400, msg: "请求不合法" });
     }
     // 用于测试环境 无数据库 情况下免密码登陆
-    if (isDev && options.dataBaseMode == "") {
+    if (isDev && !options.dataBaseMode) {
       handleLoginSuccess(res, { username });
       return;
     }
     const user = await verifyUser(username, password);
+    
     if (user) {
       handleLoginSuccess(res, user);
     } else {

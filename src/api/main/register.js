@@ -2,13 +2,14 @@ const { storeUsers } = require("../../redis");
 const { accountImport, accountCheck } = require("../../api/rest-api");
 
 async function registerAccount({ user, nick = "", avatar = "" }) {
-  console.log({ UserID: user })
+  console.log({ UserID: user });
   // 查询im账号
   const account = await accountCheck([{ UserID: user }]);
   console.log("account", account);
   // 注册im账号
-  !account &&
-    (await accountImport({ UserID: user, Nick: nick, FaceUrl: avatar }));
+  if (!account) {
+    await accountImport({ UserID: user, Nick: nick, FaceUrl: avatar });
+  }
 }
 
 const register = async (req, res) => {
