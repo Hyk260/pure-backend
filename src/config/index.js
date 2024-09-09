@@ -42,7 +42,7 @@ module.exports = {
     lowdbUser: `${process.env.LOWDB_URL}user.json`,
     // app absolute path
     basedir: __dirname,
-    dataBaseMode: 'cloudRedis' // lowdb localRedis cloudRedis
+    dataBaseMode: process.env.DATA_BASE_MODE || 'cloudRedis' // lowdb localRedis cloudRedis
   },
   github: {
     // web
