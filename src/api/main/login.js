@@ -35,7 +35,7 @@ function handleLoginSuccess(res, user) {
   const data = {
     username,
     userSig: generateSig({ identifier: username }),
-    openaiApiKey: user?.openaiApiKey ?? "",
+    // openaiApiKey: user?.openaiApiKey ?? "",
   };
   res.json({ code: 200, msg: "登录成功", result: data });
 }

@@ -6,43 +6,12 @@ const { dataBaseMode } = options;
 
 let redis = null;
 const localRedis = dataBaseMode === "localRedis"; // 使用本地redis
-const lowdb = dataBaseMode === "lowdb"; // 使用lowdb
+const lowdb = dataBaseMode === "lowdb"; // 使用本地lowdb
 // https://app.redislabs.com/
 const cloudRedis = dataBaseMode === "cloudRedis"; // 使用cloudRedis
 
 if (localRedis || cloudRedis) {
   redis = require("./init");
-}
-
-// 设置键值对
-async function setKey(key, value) {
-  try {
-    await redis.set(key, value);
-    console.log(`Set key '${key}' with value '${value}'`);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// 获取键的值
-async function getKey(key) {
-  try {
-    const value = await redis.get(key);
-    console.log(`Value for key '${key}': ${value}`);
-    return value;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// 删除键
-async function deleteKey(key) {
-  try {
-    const result = await redis.del(key);
-    console.log(`Deleted key '${key}': ${result}`);
-  } catch (error) {
-    console.error(error);
-  }
 }
 
 /**
@@ -81,15 +50,7 @@ async function getUserInfo(username) {
   }
 }
 
-function quit() {
-  redis.quit();
-}
-
 module.exports = {
   storeUsers,
   getUserInfo,
-  // setKey,
-  // getKey,
-  // deleteKey,
-  // quit,
 };

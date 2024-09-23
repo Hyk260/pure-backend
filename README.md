@@ -4,6 +4,7 @@ PureChat Node.js API service
 
 # 开发
 - src/db/userCopy.json 添加自定义用户信息 测试账号默认密码123456
+- .env 配置环境变量
 - 启动 npm run dev
 
 # 部署

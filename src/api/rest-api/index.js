@@ -13,7 +13,6 @@ const accountCheck = async (params) => {
     const { ErrorCode, ErrorInfo, ResultItem } = result;
     if (ErrorCode !== 0) return ErrorInfo;
     const flag = ResultItem[0].AccountStatus == "Imported";
-    console.log("accountCheck:", flag);
     return flag;
   } catch (error) {
     return false;
@@ -32,7 +31,6 @@ const accountImport = async (params) => {
         // FaceUrl,
       },
     });
-    console.log("注册im账号 accountImport:", result);
     const { ErrorCode } = result;
     if (ErrorCode !== 0) return ErrorInfo;
     return result;
@@ -101,7 +99,6 @@ const sendGroupMsg = async (params) => {
       // CloudCustomData: "your cloud custom data",
     },
   });
-  console.log(result, "send_group_msg");
   return result;
 };
 // 解散群组
@@ -113,7 +110,6 @@ const destroyGroup = async (groupId) => {
       GroupId: groupId,
     },
   });
-  console.log(result, "destroyGroup");
   return result;
 };
 // 拉人入群
@@ -141,7 +137,6 @@ const createRobot = async () => {
       SelfSignature: "",
     },
   });
-  console.log(result, "createRobot");
   return result;
 };
 // 拉取运营数据
@@ -151,7 +146,6 @@ const getappInfo = async () => {
     method: "post",
     data: {},
   });
-  console.log(result, "getappInfo");
   return result;
 };
 // 修改单聊历史消息
@@ -174,7 +168,6 @@ const modifyC2cMsg = async (params) => {
       ],
     },
   });
-  console.log(result, "modifyC2cMsg");
   return result;
 };
 // 拉取单聊历史消息
@@ -193,7 +186,6 @@ const adminGetroammsg = async (params) => {
       MaxTime: maxTime,
     },
   });
-  console.log(result, "adminGetroammsg");
   return result;
 };
 // 拉取资料
@@ -207,8 +199,6 @@ const getPortrait = async (params) => {
       TagList: ["Tag_Profile_IM_Nick"],
     },
   });
-  console.log(result, "拉取资料");
-  // console.log(result.UserProfileItem[0].ProfileItem[0].Value)
   return result.UserProfileItem[0].ProfileItem[0].Value;
 };
 // 创建公众号
@@ -228,7 +218,6 @@ const createOfficialAccount = async (params) => {
       Organization: "", // 公众号所属的团体组织
     },
   });
-  console.log(result, "创建公众号");
   return result;
 };
 // 获取 App 中的所有群组
@@ -241,8 +230,6 @@ const getAppidGroupList = async () => {
       Next: 0,
     },
   });
-  console.log(result, "拉取群组");
-  console.log(result);
   return result;
 };
 // 获取群详细资料
@@ -254,8 +241,6 @@ const getGroupInfo = async (params) => {
       GroupIdList: params, // [ "@TGS#1NVTZEAE4", "@TGS#1CXTZEAET" ],
     },
   });
-  console.log(result, "获取群详细资料");
-  console.log(result);
   return result;
 };
 
