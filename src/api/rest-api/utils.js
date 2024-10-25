@@ -33,6 +33,7 @@ function buildURL(baseURL) {
     .join("&");
   return `${baseURL}?${query}`;
 }
+
 module.exports = {
   randomInt32,
   buildURL,

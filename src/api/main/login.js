@@ -11,6 +11,7 @@ const { jwtSecret, expireTime, isDev, options } = require("../../config");
 function getToken(user) {
   return jwt.sign(user, jwtSecret, { expiresIn: expireTime });
 }
+
 /**
  * 验证用户信息，并返回用户数据（不包含密码）或false
  * @param {string} username - 用户名
