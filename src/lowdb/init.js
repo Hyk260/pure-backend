@@ -3,7 +3,7 @@ const path = require("path");
 const FileSync = require("lowdb/adapters/FileSync");
 const CryptoJS = require("crypto-js");
 
-let configure = {}
+let configure = {};
 let dbUser = path.resolve(__dirname, "../db/userCopy.json");
 
 const secretKey = process.env.LOWDB_ENCRYPTION_KEY;
@@ -22,7 +22,7 @@ if (secretKey.length) {
   configure = {
     serialize: (data) => encrypt(JSON.stringify(data)),
     deserialize: (data) => JSON.parse(decrypt(data)),
-  }
+  };
 }
 
 const adapter = new FileSync(dbUser, configure);
@@ -35,13 +35,21 @@ const lowdbUser = lowdb(adapter);
 // 设置初始数据
 // lowdbUser.defaults({ user: [] }).write();
 
-// 写入数据
-// lowdbUser.get("user").push({ username: "admin", password: "123456" }).write();
-
 // 读取数据
-// const user = lowdbUser.get("user").find({ username:"admin", password:'123456' }).value();
-// const user = lowdbUser.get("user").value();
-// console.log(user, 'user');
+// const user = lowdbUser
+//   .get("user")
+//   .find({ username: "wangjie", password: "123456" })
+//   .value();
+// 写入数据
+// if (!user) {
+//   lowdbUser
+//     .get("user")
+//     .push({ username: "wangjie", password: "123456" })
+//     .write();
+// }
+
+const userAll = lowdbUser.get("user").value();
+console.log(userAll, "user");
 
 module.exports = {
   lowdbUser,
