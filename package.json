@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.1.4",
+    "@types/crypto-js": "^4.2.2",
     "@types/jsonwebtoken": "^9.0.8",
+    "@types/lowdb": "^1.0.15",
     "@types/nodemon": "^1.19.6",
     "@vercel/node": "^2.8.4",
     "ai": "^4.1.7",

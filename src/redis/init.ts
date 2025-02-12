@@ -1,8 +1,8 @@
-import Redis from "ioredis";
+import Redis, { RedisOptions } from "ioredis";
 import options from "../config";
 
 const redis = new Redis({
-  port: options.redis.port, // 端口号
+  port: Number(options.redis.port), // 端口号
   host: options.redis.host, // ip
   username: options.redis.username,
   password: options.redis.password,
@@ -21,4 +21,4 @@ redis.on("error", (err) => {
   redis.quit();
 });
 
-module.exports = redis
+export default redis;

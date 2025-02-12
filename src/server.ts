@@ -1,6 +1,7 @@
 import './utils/env-loader'
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'node:path';
+import {jwtParser} from './utils/jwtParser';
 import mainRouter from './routes/index';
 
 interface ServerOptions {
@@ -45,6 +46,9 @@ async function constructServer() {
 
   /* 设置静态文件目录 */
   app.use(express.static(path.join(process.cwd(), "public")));
+
+  /* 解析和验证JWT */
+  app.use(jwtParser);
 
   /* 路由 */
   app.use("/", mainRouter);

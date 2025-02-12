@@ -22,8 +22,6 @@ export default {
   openaiApiKey: process.env.OPENAI_API_KEY,
   options: {
     lowdbUser: `${process.env.LOWDB_URL}user.json`,
-    // app absolute path
-    basedir: __dirname,
     dataBaseMode: process.env.DATA_BASE_MODE || 'cloudRedis' // lowdb localRedis cloudRedis
   },
   github: {
