@@ -10,6 +10,7 @@ yarn-error.log*
 yarn.lock
 access.log
 package-lock.json
+pnpm-lock.yaml
 
 # dotenv environment variables file
 .env.local

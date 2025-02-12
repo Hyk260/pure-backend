@@ -1,9 +1,23 @@
 {
-  "restartable": "rs",
-  "ignore": [".git", "node_modules/", "dist/", "db/"],
+  "ignore": [
+    ".git",
+    "node_modules/",
+    "db/",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    "node_modules",
+    "dist"
+  ],
   "watch": ["src/"],
   "env": {
-    "NODE_ENV": "development"
+    "NODE_ENV": "development",
+    "TS_NODE_TRANSPILE_ONLY": "true"
   },
-  "ext": "js,json"
+  "exec": "tsx src/server.ts",
+  "ext": "ts,js,json",
+  "execMap": {
+    "ts": "tsx"
+  },
+  "delay": 1500,
+  "legacyWatch": true
 }
