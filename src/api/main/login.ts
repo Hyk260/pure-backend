@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from "jsonwebtoken";
-import generateSig from "../../utils/generateSig";
+import { generateUserSig } from "../../utils/generateSig";
 import { getUserInfo } from "../../redis";
 import config from "../../config";
 
@@ -34,17 +34,17 @@ export function handleLoginSuccess(res: Response, user: any) {
   res.setHeader("X-token", `Bearer ${getToken(user)}`);
   const data = {
     username,
-    userSig: generateSig({ identifier: username }),
+    userSig: generateUserSig({ identifier: username }),
   };
   res.status(200).json({ code: 200, msg: "登录成功", result: data });
 }
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, password } = req.body as UserInfo;
     console.log("login", `用户名：${username}`, `密码：${password}`);
     if (!username || !password) {
-      return res.status(400).json({ code: 400, msg: "请求不合法" });
+      res.status(400).json({ code: 400, msg: "请求不合法" });
     }
     // 用于测试环境 无数据库 情况下免密码登陆
     if (isDev && !options.dataBaseMode) {

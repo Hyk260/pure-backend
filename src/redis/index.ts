@@ -1,25 +1,20 @@
 import config from "../config";
 import { ACCOUNTS } from "./constants";
 import { storeLowdbUsers, getLowdbUserInfo } from "../lowdb/index";
+import { UserCredentials } from '../types/index';
+import redis from './init';
 
 const { dataBaseMode } = config.options;
 
-let redis: any = null;
-const localRedis = dataBaseMode === "localRedis"; // 使用本地redis
 const lowdb = dataBaseMode === "lowdb"; // 使用本地lowdb
+const localRedis = dataBaseMode === "localRedis"; // 使用本地redis
 // https://app.redislabs.com/
 const cloudRedis = dataBaseMode === "cloudRedis"; // 使用cloudRedis
-
-async function loadModule() {
-  redis = await import("./init");
-}
-
-if (localRedis || cloudRedis) loadModule()
 
 /**
  * 注册用户信息
  */
-export async function storeUsers({ username: name, password: pass }) {
+export async function storeUsers({ username: name, password: pass }: UserCredentials) {
   try {
     if (lowdb) {
       return storeLowdbUsers({ username: name, password: pass });

@@ -8,11 +8,11 @@ export default {
   // jwt算法 HS256
   jwtAlgorithm: process.env.JWT_ALGO || "HS256",
   // im app管理员id
-  administrator: process.env.ADMIN_ISTRATOR,
+  administrator: process.env.ADMIN_ISTRATOR || '',
   // im sdk
   imAppId: process.env.IM_SDK_APPID || "",
   imAppKey: process.env.IM_SDK_KEY || "",
-  imServerBaseUrl: process.env.IM_SERVER_BASE_URL,
+  imServerBaseUrl: process.env.IM_SERVER_BASE_URL || "",
   // cos
   bucket: "ljx-1307934606", // 存储桶的名称
   region: "ap-beijing", // 存储桶所在地域

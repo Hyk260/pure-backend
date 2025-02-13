@@ -1,12 +1,15 @@
 import TLSSigAPIv2 from "tls-sig-api-v2";
 import config from "../config";
 
-export default ({ identifier = "" }) => {
+export const generateUserSig = ({ identifier = "" }) => {
   const { imAppId: appId, imAppKey: appKey } = config;
 
   const EXPIRETIME = 86400 * 7;
+
   const api = new TLSSigAPIv2.Api(appId, appKey);
+
   console.log("计算userSig:", identifier);
+  
   return api.genSig(identifier, EXPIRETIME);
 };
 

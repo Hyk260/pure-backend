@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import GitHubAPI, { ClientType, UserInfoType } from "../api/github/index";
 import { getGitHubSecretKey } from '../utils/common';
-// import { registerAccount } from "../api/main/register";
-// import { handleLoginSuccess } from "../api/main/login";
+import { registerAccount } from "../api/main/register";
+import { handleLoginSuccess } from "../api/main/login";
 
 export async function authorize(req: Request, res: Response): Promise<void> {
   const client = req.query.client as ClientType;
@@ -35,7 +35,7 @@ export async function callback(req: Request, res: Response): Promise<void> {
 
       console.log('userInfo', userInfo);
 
-      // await registerAccount({ user: id.toString(), nick: login, avatar: avatar_url });
+      await registerAccount({ id: id.toString(), nick: login, avatar: avatar_url });
       handleLoginSuccess(res, { username: id.toString() });
     }
   } catch (error) {

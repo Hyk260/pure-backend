@@ -1,13 +1,10 @@
 import './utils/env-loader'
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'node:path';
-import {jwtParser} from './utils/jwtParser';
+import bodyParser from "body-parser";
+import jwtParser from './utils/jwtParser';
 import mainRouter from './routes/index';
-
-interface ServerOptions {
-  port: number | string;
-  host: string;
-}
+import { ServerOptions } from './types/index';
 
 function corsHandler(req: Request, res: Response, next: NextFunction) {
   // 检查请求路径，如果不是根路径且不包含'.'，则处理CORS
@@ -44,6 +41,9 @@ async function constructServer() {
 
   app.use(corsHandler);
 
+  /* 解析请求正文 支持URL编码和JSON格式 */
+  app.use(bodyParser.json());
+
   /* 设置静态文件目录 */
   app.use(express.static(path.join(process.cwd(), "public")));
 
@@ -66,7 +66,7 @@ async function serveNcmApi(options: ServerOptions) {
   const appExt = await constructServer();
 
   appExt.listen(port, host, () => {
-    console.log(`server running @ http://${host}:${port}`);
+    console.log(`PureChat API Local: http://${host}:${port}`);
   });
 
   return appExt;
