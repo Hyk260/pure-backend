@@ -1,55 +1,60 @@
 import { Request, Response } from 'express';
-import service from "../../http/rest-api";
-import { generateRandomInt32, buildURL } from "./utils";
+import { http } from "../../http/rest-api";
+import { generateRandomInt32 } from "./utils";
 
 interface Result {
+  ActionStatus: string;
   ErrorCode: number;
   ErrorInfo: string;
   ResultItem: any[];
 }
 
-export const accountCheck = async (params: any) => {
+interface CheckItem {
+  UserID: string;
+}
+
+interface AccountImportParams {
+  UserID: string;
+  Nick?: string;
+  FaceUrl?: string;
+}
+
+// 用于查询自有账号是否已导入即时通信 IM，支持批量查询。
+// https://cloud.tencent.com/document/product/269/38417
+export const accountCheck = async (params: CheckItem[]): Promise<boolean> => {
   try {
-    const result: Result = await service({
-      url: buildURL("v4/im_open_login_svc/account_check"),
+    const result: Result = await http.request({
+      url: "v4/im_open_login_svc/account_check",
       method: "post",
-      data: {
-        CheckItem: params,
-      },
+      data: { CheckItem: params },
     });
-    const { ErrorCode, ErrorInfo, ResultItem } = result;
-    if (ErrorCode !== 0) return ErrorInfo;
-    const flag = ResultItem[0].AccountStatus == "Imported";
-    return flag;
+    return result.ResultItem?.[0]?.AccountStatus === "Imported";
   } catch (error) {
+    console.error('Account check failed:', error);
     return false;
   }
 };
+
 // 导入单个账号
-export const accountImport = async (params: any) => {
+export const accountImport = async (params: AccountImportParams): Promise<boolean> => {
   try {
-    const result: Result = await service({
-      url: buildURL("v4/im_open_login_svc/account_import"),
+    const result: Result = await http.request({
+      url: "v4/im_open_login_svc/account_import",
       method: "post",
-      data: {
-        ...params,
-        // UserID,
-        // Nick,
-        // FaceUrl,
-      },
+      data: { ...params },
     });
-    const { ErrorCode, ErrorInfo } = result;
-    if (ErrorCode !== 0) return ErrorInfo;
-    return result;
+    return result.ErrorCode === 0;
   } catch (error) {
-    console.log(error);
+    console.error('Account import failed:', error);
+    return false;
   }
 };
 // 单发单聊消息
+// https://cloud.tencent.com/document/product/269/2282
 export const restSendMsg = async (params: any) => {
   const { From_Account, To_Account, Text } = params;
-  const result = await service({
-    url: buildURL("v4/openim/sendmsg"),
+  const result: Result = await http.request({
+    url: "v4/openim/sendmsg",
     method: "post",
     data: {
       SyncOtherMachine: 1, // 消息同步1 不同步 2
@@ -71,14 +76,13 @@ export const restSendMsg = async (params: any) => {
       ],
     },
   });
-  console.log(result, "restSendMsg");
   return result;
 };
 // 拉人入群
 export const addGroupMember = async (params: any) => {
   const { groupId, member } = params;
-  const result = await service({
-    url: buildURL("v4/group_open_http_svc/add_group_member"),
+  const result: Result = await http.request({
+    url: "v4/group_open_http_svc/add_group_member",
     method: "post",
     data: {
       GroupId: groupId,
@@ -87,17 +91,30 @@ export const addGroupMember = async (params: any) => {
   });
   return result;
 };
-export const restApi = async (req: Request, res: Response) => {
-  const data = req.body;
-  console.log("入参 restApi", data);
-  const { params, funName = "" } = data;
+
+// API路由处理
+const API_METHODS = {
+  accountCheck,
+  accountImport,
+  restSendMsg,
+  addGroupMember
+} as const;
+
+export const restApi = async (req: Request, res: Response): Promise<void> => {
+  const { params = {}, funName } = req.body;
+
+  if (!funName || !(funName in API_METHODS)) {
+    res.status(404).json({ msg: "Invalid function name" });
+  }
+
   try {
-    const result = await funName(params);
-    console.log(`出参 restApi:${funName}`, result);
-    res.status(200).json({ msg: "成功", result });
+    const result = await API_METHODS[funName as keyof typeof API_METHODS](params);
+    res.status(200).json({ success: true, result: result });
   } catch (error) {
-    console.error(error)
-    res.status(400).json({ msg: "失败" });
+    console.error(`API Error [${funName}]:`, error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 };
-

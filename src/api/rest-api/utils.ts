@@ -1,5 +1,5 @@
 import config from "../../config";
-import { generateUserSig } from "../../utils/generateSig";
+import { generateUserSig } from "../../utils/signature";
 
 const { imAppId, administrator } = config
 
@@ -15,15 +15,16 @@ interface Params {
 }
 
 export function generateRandomInt32() {
-  return Math.floor(Math.random() * 4294967296);
+  return Math.floor(Math.random() * 0x100000000);
 }
 
 export function getUserSig() {
-  if (cachedSig && cacheExpiration && cacheExpiration > Date.now()) {
+  const now = Date.now();
+  if (cachedSig && cacheExpiration && cacheExpiration > now) {
     return cachedSig;
   }
   cachedSig = generateUserSig({ identifier: administrator });
-  cacheExpiration = Date.now() + 60 * 60 * 1000;
+  cacheExpiration = now + 60 * 60 * 1000;
   return cachedSig;
 }
 

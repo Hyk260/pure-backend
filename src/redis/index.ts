@@ -74,11 +74,8 @@ export async function storeUsers(credentials: UserCredentials): Promise<void> {
  */
 export async function getUserInfo(username: string): Promise<Record<string, string> | null> {
   try {
-    const userInfo = await strategy.getUserInfo(username);
-    console.log("用户信息查询成功:", username);
-    return userInfo;
+    return await strategy.getUserInfo(username);
   } catch (error) {
-    console.error("查询用户信息时出错:", error);
     return null;
   }
 }

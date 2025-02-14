@@ -21,7 +21,6 @@ export default {
   // chatgpt
   openaiApiKey: process.env.OPENAI_API_KEY,
   options: {
-    lowdbUser: `${process.env.LOWDB_URL}user.json`,
     dataBaseMode: process.env.DATA_BASE_MODE || 'cloudRedis' // lowdb localRedis cloudRedis
   },
   github: {
@@ -47,6 +46,7 @@ export default {
   },
   // jwt免token白名单接口
   authOrity: [
+    "/rest-api",
     "/market",
     "/login",
     "/register",

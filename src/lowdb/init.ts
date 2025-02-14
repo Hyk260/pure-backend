@@ -1,31 +1,39 @@
+import path from 'node:path';
 import lowdb from "lowdb";
-import path from "node:path";
+// import { fileURLToPath } from 'node:url';
+// import { find } from 'lodash-es';
 import FileSync from "lowdb/adapters/FileSync";
-import CryptoJS from "crypto-js";
+import { encrypt, decrypt } from "../utils/crypto";
 
-let configure = {};
-let dbUser = path.resolve(__dirname, "../db/userTest.json");
-
+// const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const secretKey = process.env.LOWDB_ENCRYPTION_KEY || "";
 
-function encrypt(data: string) {
-  return CryptoJS.AES.encrypt(data, secretKey).toString();
-}
+// userTest.json
+// {
+//   "user": [
+//     {
+//       "username": "admin",
+//       "password": "123456"
+//     }
+//   ]
+// }
 
-function decrypt(data: any) {
-  const bytes = CryptoJS.AES.decrypt(data, secretKey);
-  return bytes.toString(CryptoJS.enc.Utf8);
-}
+const dbPath = secretKey
+  ? path.resolve(__dirname, "../db/user.json")
+  : path.resolve(__dirname, "../db/userTest.json");
 
-if (secretKey.length) {
-  dbUser = path.resolve(__dirname, "../db/user.json");
-  configure = {
-    serialize: (data: any) => encrypt(JSON.stringify(data)),
-    deserialize: (data: any) => JSON.parse(decrypt(data)),
-  };
-}
+const dbConfig = secretKey ? {
+  serialize: (data: any) => encrypt(JSON.stringify(data), secretKey),
+  deserialize: (data: string) => JSON.parse(decrypt(data, secretKey))
+} : {};
 
-const adapter = new FileSync(dbUser, configure);
 
 // 初始化lowdb
-export const lowdbUser = lowdb(adapter);
+const adapter = new FileSync(dbPath, dbConfig);
+
+// 初始化lowdb
+export const lowdbUserDB = lowdb(adapter);
+
+// console.log(lowdbUserDB.get("user").value());
+
+console.log(lowdbUserDB.get("user").find({ username: "admin" }).value());

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from "jsonwebtoken";
-import { generateUserSig } from "../../utils/generateSig";
+import { generateUserSig } from "../../utils/signature";
 import { getUserInfo } from "../../redis";
 import config from "../../config";
 
