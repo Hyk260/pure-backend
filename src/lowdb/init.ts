@@ -36,4 +36,4 @@ export const lowdbUserDB = lowdb(adapter);
 
 // console.log(lowdbUserDB.get("user").value());
 
-console.log(lowdbUserDB.get("user").find({ username: "admin" }).value());
+// console.log(lowdbUserDB.get("user").find({ username: "admin" }).value());

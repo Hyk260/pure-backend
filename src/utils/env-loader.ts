@@ -12,6 +12,10 @@ export function loadEnv() {
     path.join(rootPath, '.env.local'),  // 本地覆盖配置
   ]
 
+  if (process.env.NODE_ENV === 'production') {
+    envFiles.push(path.join(rootPath, '.env.pro')) // 生产环境配置
+  }
+
   // 按优先级顺序加载环境文件
   envFiles.forEach(file => {
     if (fs.existsSync(file)) {
@@ -23,7 +27,7 @@ export function loadEnv() {
     }
   })
 
-  // console.log("process.env.NODE_ENV", process.env);
+  // console.log("process.env", process.env);
 }
 
 loadEnv()

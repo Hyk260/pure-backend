@@ -2,6 +2,7 @@ import './utils/env-loader'
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'node:path';
 import bodyParser from "body-parser";
+import config from './config';
 import jwtParser from './utils/jwtParser';
 import mainRouter from './routes/index';
 import { ServerOptions } from './types/index';
@@ -60,6 +61,7 @@ async function constructServer() {
 }
 
 async function serveNcmApi(options: ServerOptions) {
+  console.log("config", config);
   const port = Number(options.port || process.env.PORT);
   const host = options.host || process.env.HOST || "localhost";
 
