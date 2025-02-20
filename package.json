@@ -9,6 +9,7 @@
     "build": "tsc --project tsconfig.json",
     "start": "node dist/server.js",
     "start:prod": "NODE_ENV=production node dist/server.js",
+    "server": "node index.js",
     "type-check": "tsc --noEmit",
     "env-check": "node scripts/check-env.js",
     "clean": "rm -rf dist",
