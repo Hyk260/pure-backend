@@ -1,23 +1,19 @@
 # Dependency directories
-node_modules/
+node_modules
 
-# Logs
-logs
-*.log
+# Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-yarn.lock
-access.log
-package-lock.json
-pnpm-lock.yaml
+
+# Editor directories and files
+.vercel
 
 # dotenv environment variables file
 .env.local
 
-# dist
-# /dist
-.vercel
+# output
+dist
 
 # db
 # src/db/user.json
