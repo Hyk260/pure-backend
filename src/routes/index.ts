@@ -2,6 +2,7 @@ import express from 'express';
 import market from '../db/market.json';
 import { login } from "../api/main/login";
 import { authorize, callback } from "./auth";
+import { plugin } from './plugin';
 import { restApi } from "../api/rest-api";
 
 const router: express.Router = express.Router();
@@ -13,6 +14,8 @@ router.get("/test", (req, res) => {
 router.get("/market", (req, res) => {
   res.json(market);
 });
+
+router.get("/webapi/plugin/:id", plugin)
 
 /* POST 登录 */
 router.post("/login", login);

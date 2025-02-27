@@ -1,13 +1,6 @@
 import axios from "axios";
+import { ClientType } from '../../types';
 import { getGitHubSecretKey } from '../../utils/common';
-
-export type ClientType = "web" | "app";
-
-export type UserInfoType = {
-  id: number;
-  login: string;
-  avatar_url: string;
-}
 
 const CONFIG = {
   GITHUB_API_URL: "https://api.github.com",

@@ -1,0 +1,66 @@
+[
+  {
+    "city": "武汉市",
+    "adcode": "420100",
+    "province": "湖北",
+    "reporttime": "2025-02-27 15:02:02",
+    "casts": [
+      {
+        "date": "2025-02-27",
+        "week": "4",
+        "dayweather": "晴",
+        "nightweather": "多云",
+        "daytemp": "20",
+        "nighttemp": "6",
+        "daywind": "北",
+        "nightwind": "北",
+        "daypower": "1-3",
+        "nightpower": "1-3",
+        "daytemp_float": "20.0",
+        "nighttemp_float": "6.0"
+      },
+      {
+        "date": "2025-02-28",
+        "week": "5",
+        "dayweather": "多云",
+        "nightweather": "多云",
+        "daytemp": "22",
+        "nighttemp": "11",
+        "daywind": "北",
+        "nightwind": "北",
+        "daypower": "1-3",
+        "nightpower": "1-3",
+        "daytemp_float": "22.0",
+        "nighttemp_float": "11.0"
+      },
+      {
+        "date": "2025-03-01",
+        "week": "6",
+        "dayweather": "多云",
+        "nightweather": "多云",
+        "daytemp": "27",
+        "nighttemp": "15",
+        "daywind": "北",
+        "nightwind": "北",
+        "daypower": "1-3",
+        "nightpower": "1-3",
+        "daytemp_float": "27.0",
+        "nighttemp_float": "15.0"
+      },
+      {
+        "date": "2025-03-02",
+        "week": "7",
+        "dayweather": "大雨",
+        "nightweather": "小雨",
+        "daytemp": "26",
+        "nighttemp": "1",
+        "daywind": "北",
+        "nightwind": "北",
+        "daypower": "1-3",
+        "nightpower": "1-3",
+        "daytemp_float": "26.0",
+        "nighttemp_float": "1.0"
+      }
+    ]
+  }
+]
