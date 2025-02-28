@@ -49,7 +49,9 @@ async function constructServer() {
   app.use(express.static(path.join(process.cwd(), "public")));
 
   /* 解析和验证JWT */
-  app.use(jwtParser);
+  if (process.env.ENABLE_JWT === 'Y') {
+    app.use(jwtParser);
+  }
 
   /* 路由 */
   app.use("/", mainRouter);

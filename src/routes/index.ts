@@ -15,7 +15,7 @@ router.get("/market", (req, res) => {
   res.json(market);
 });
 
-router.get("/webapi/plugin/:id", plugin)
+router.post("/webapi/plugin/:apiName", plugin)
 
 /* POST 登录 */
 router.post("/login", login);
