@@ -2,7 +2,6 @@ import config from "../config";
 import { ACCOUNTS } from "./constants";
 import { storeLowdbUsers, getLowdbUserInfo } from "../lowdb/index";
 import { UserCredentials } from '../types/index';
-import redis from './init';
 
 const { dataBaseMode } = config.options;
 
@@ -25,7 +24,7 @@ class LowdbStrategy implements DatabaseStrategy {
 
 // Redis 策略实现
 class RedisStrategy implements DatabaseStrategy {
-  constructor(private readonly redisClient: typeof redis) {}
+  constructor(private readonly redisClient: any) {}
 
   async storeUsers({ username, password }: UserCredentials): Promise<void> {
     const key = `${ACCOUNTS}:${username}`;
@@ -39,27 +38,29 @@ class RedisStrategy implements DatabaseStrategy {
   }
 }
 
-// 根据配置选择数据库策略
-let strategy: DatabaseStrategy;
-
-switch (dataBaseMode) {
-  case "lowdb":
-    strategy = new LowdbStrategy();
-    break;
-  case "localRedis":
-    strategy = new RedisStrategy(redis);
-    break;
-  case "cloudRedis":
-    strategy = new RedisStrategy(redis);
-    break;
-  default:
-    throw new Error(`Unsupported database mode: ${dataBaseMode}`);
+// 策略初始化
+async function initializeStrategy(): Promise<DatabaseStrategy> {
+  switch (dataBaseMode) {
+    case "lowdb":
+      return new LowdbStrategy();
+    case "localRedis":
+    case "cloudRedis":
+      const redisModule = await import('./init');
+      return new RedisStrategy(redisModule.default);
+    default:
+      throw new Error(`Unsupported database mode: ${dataBaseMode}`);
+  }
 }
+
+// 初始化策略
+const strategyPromise = initializeStrategy();
 
 /**
  * 统一存储用户信息
  */
 export async function storeUsers(credentials: UserCredentials): Promise<void> {
+  const strategy = await strategyPromise;
+
   try {
     await strategy.storeUsers(credentials);
     console.log("用户信息存储成功:", credentials.username);
@@ -73,9 +74,12 @@ export async function storeUsers(credentials: UserCredentials): Promise<void> {
  * 统一查询用户信息
  */
 export async function getUserInfo(username: string): Promise<Record<string, string> | null> {
+  const strategy = await strategyPromise;
+
   try {
     return await strategy.getUserInfo(username);
   } catch (error) {
+    console.error("查询用户信息时出错:", error);
     return null;
   }
 }
