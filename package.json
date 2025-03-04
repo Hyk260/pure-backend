@@ -4,13 +4,13 @@
   "type": "commonjs",
   "description": "PureChat Server api",
   "scripts": {
-    "dev": "nodemon",
-    "start": "tsx src/server.ts",
+    "dev": "cross-env NODE_ENV=development nodemon",
+    "start": "cross-env NODE_ENV=production tsx src/server.ts",
     "build": "tsc --project tsconfig.json",
-    "server": "node index.js",
+    "server": "cross-env NODE_ENV=production node index.js",
     "type-check": "tsc --noEmit",
-    "env-check": "node scripts/check-env.js",
-    "clean": "rm -rf dist",
+    "check-env": "node scripts/check-env.js",
+    "clean": "rimraf dist",
     "rebuild": "npm run clean && npm run build"
   },
   "dependencies": {
@@ -34,7 +34,6 @@
     "express-session": "^1.17.3",
     "ioredis": "^5.4.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "lowdb": "^1.0.0",
     "morgan": "^1.10.0",
@@ -52,6 +51,8 @@
     "@types/nodemon": "^1.19.6",
     "nodemon": "^2.0.20",
     "tsx": "^4.19.2",
+    "rimraf": "^4.0.6",
+    "cross-env": "^7.0.3",
     "typescript": "^5.6.3"
   },
   "engines": {

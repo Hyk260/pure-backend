@@ -10,7 +10,7 @@ yarn-error.log*
 .vercel
 
 # dotenv environment variables file
-.env.local
+.env*.local
 
 # output
 dist

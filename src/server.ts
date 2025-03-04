@@ -2,9 +2,10 @@ import './utils/env-loader'
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'node:path';
 import bodyParser from "body-parser";
-import config from './config';
 import jwtParser from './utils/jwtParser';
 import mainRouter from './routes/index';
+import { configuration } from './config';
+import { log } from './utils/logger';
 import { ServerOptions } from './types/index';
 
 function corsHandler(req: Request, res: Response, next: NextFunction) {
@@ -63,14 +64,14 @@ async function constructServer() {
 }
 
 async function serveNcmApi(options: ServerOptions) {
-  console.log("config", config);
+  console.log("config", configuration());
   const port = Number(options.port || process.env.PORT);
   const host = options.host || process.env.HOST || "localhost";
 
   const appExt = await constructServer();
 
   appExt.listen(port, host, () => {
-    console.log(`PureChat API Local: http://${host}:${port}`);
+    log(`PureChat API Local: http://${host}:${port}`);
   });
 
   return appExt;
