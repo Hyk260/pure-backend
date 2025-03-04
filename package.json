@@ -9,7 +9,7 @@
     "build": "tsc --project tsconfig.json",
     "server": "cross-env NODE_ENV=production node index.js",
     "type-check": "tsc --noEmit",
-    "check-env": "node scripts/check-env.js",
+    "check-env": "node scripts/check-env.mjs",
     "clean": "rimraf dist",
     "rebuild": "npm run clean && npm run build"
   },
