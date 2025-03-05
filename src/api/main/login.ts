@@ -56,7 +56,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     if (user) {
       handleLoginSuccess(res, user);
     } else {
-      res.status(400).json({ code: 400, msg: "用户名或密码不正确" });
+      res.json({ code: 400, msg: "用户名或密码不正确" });
     }
   } catch (error) {
     console.error("登录接口错误:", error);

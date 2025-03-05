@@ -17,5 +17,5 @@
     "noEmit": false
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["src/db", "node_modules"]
 }

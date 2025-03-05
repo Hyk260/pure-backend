@@ -14,10 +14,6 @@ PureChat Node.js API service
 
 生产环境（npm run server）：
 
-.env → 基础配置
-
-.env.local → 本地通用覆盖
-
 .env.production → 生产环境配置
 
 # 开发
